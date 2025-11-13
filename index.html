@@ -2,10 +2,630 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Teste Litoral</title>
+  <title>Calculadora Penal Litoral City</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #020617;
+      color: #e5e7eb;
+      padding: 20px;
+    }
+
+    @keyframes glow {
+      0%   { filter: drop-shadow(0 0 4px #38bdf8); }
+      50%  { filter: drop-shadow(0 0 18px #0ea5e9); }
+      100% { filter: drop-shadow(0 0 4px #38bdf8); }
+    }
+
+    .logo-wrap {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .logo-wrap img {
+      max-width: 260px;
+      width: 80%;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #020617;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid #1f2937;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 4px;
+      font-size: 26px;
+      color: #38bdf8;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    h2 {
+      margin: 18px 0 10px;
+      font-size: 18px;
+      color: #e5e7eb;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .card {
+      background: #020617;
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid #1f2937;
+    }
+
+    label {
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #38bdf8;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #38bdf8;
+      color: #111827;
+      transition: 0.1s;
+    }
+
+    button:hover {
+      background: #0ea5e9;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(56,189,248,0.35);
+    }
+
+    button.small {
+      padding: 4px 10px;
+      font-size: 12px;
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+      box-shadow: 0 10px 20px rgba(248,113,113,0.25);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    th {
+      background: #020617;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .totais {
+      margin-top: 8px;
+      font-size: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .badge {
+      background: #0f172a;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #374151;
+    }
+
+    .badge span {
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .checks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      font-size: 14px;
+    }
+
+    .checks label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .checks input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #38bdf8;
+    }
+
+    .result-block {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #030712;
+      border: 1px solid #4b5563;
+      font-size: 14px;
+    }
+
+    .result-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .result-main {
+      font-size: 22px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 4px;
+    }
+
+    .footer {
+      margin-top: 16px;
+      font-size: 11px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 12px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<body style="background:#111827; color:#f9fafb; font-family: Arial, sans-serif;">
-  <h1 style="text-align:center; margin-top:40px;">FUNCIONOU! 🚓🌊</h1>
-  <p style="text-align:center;">Se você está vendo esse texto, o GitHub Pages está ok.</p>
+<body>
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <!-- Certifique-se de que o arquivo existe no repositório com esse nome -->
+    <img src="LITORAL_CITY_2.gif" alt="Litoral City Roleplay">
+  </div>
+
+  <div class="container">
+    <h1>Calculadora Penal Litoral City</h1>
+    <p class="subtitle">Cálculo de serviços, multa e fiança baseado no Código Penal da Litoral City.</p>
+
+    <!-- BLOCO: ADICIONAR ARTIGOS -->
+    <div class="card">
+      <h2>Adicionar artigo</h2>
+      <p style="font-size: 13px; color:#9ca3af; margin-bottom:6px;">
+        Digite o número do artigo (ex: <b>10</b>, <b>10.1</b>, <b>23.2</b>...) ou selecione na lista e clique em <b>Adicionar</b>.
+      </p>
+
+      <div class="grid">
+        <div>
+          <label for="inputCodigo">Código do artigo</label>
+          <input type="text" id="inputCodigo" placeholder="Ex: 10, 10.1, 23, 36.4..." />
+
+          <label for="selectArtigo">Ou selecionar</label>
+          <select id="selectArtigo">
+            <option value="">Selecione um artigo...</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="inputDescricaoExtra">Observação (opcional)</label>
+          <input type="text" id="inputDescricaoExtra" placeholder="Ex: detalhes do crime..." />
+          <button id="btnAdicionar">Adicionar artigo</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Cód.</th>
+            <th>Descrição</th>
+            <th>Serviços</th>
+            <th>Multa</th>
+            <th>Fiança</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tabelaArtigosBody"></tbody>
+      </table>
+
+      <div class="totais">
+        <div class="badge">Serviços: <span id="totalServicos">0</span></div>
+        <div class="badge">Multa: <span id="totalMulta">R$ 0</span></div>
+        <div class="badge">Fiança: <span id="totalFianca">R$ 0</span></div>
+      </div>
+    </div>
+
+    <!-- BLOCO: REDUÇÕES E RESULTADO -->
+    <div class="grid" style="margin-top: 16px;">
+      <div class="card">
+        <h2>Reduções / Benefícios</h2>
+
+        <div class="checks">
+          <label><input type="checkbox" id="chkReuPrimario" /> Réu primário (-30%)</label>
+          <label><input type="checkbox" id="chkColaboracao" /> Cooperação / rendição (-10%)</label>
+          <label><input type="checkbox" id="chkAdvogado" /> Detenção com advogado (-30%)</label>
+          <label><input type="checkbox" id="chkConfissao" /> Delação premiada (-50%)</label>
+        </div>
+
+        <button style="margin-top: 10px;" id="btnCalcularFinal">Calcular pena final</button>
+      </div>
+
+      <div class="card">
+        <h2>Resultado</h2>
+
+        <div class="result-block">
+          <div class="result-title">Pena de serviços</div>
+          <div class="result-main"><span id="penaFinal">0</span> meses</div>
+          <div class="result-extra">
+            Multa total: <b id="resultadoMulta">R$ 0</b><br />
+            Fiança total: <b id="resultadoFianca">R$ 0</b>
+          </div>
+        </div>
+
+        <div class="result-block">
+          <div class="result-title">Status sugerido</div>
+          <div class="result-main" id="statusRP">—</div>
+          <div class="result-extra" id="statusRPDetalhe">Adicione artigos e calcule.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Baseado no Código Penal da Litoral City • Ajuste valores se o governo alterar o código.
+    </div>
+  </div>
+
+  <script>
+    // ============================
+    // TABELA COMPLETA DO CÓDIGO PENAL LITORAL CITY
+    // ============================
+
+    const artigos = {
+      // VIDA
+      "10":   { descricao: "Homicídio doloso (matar alguém com intenção)",                   servicos: 60, multa: 60000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "10.1": { descricao: "Homicídio culposo (matar alguém sem intenção)",                 servicos: 40, multa: 40000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "10.2": { descricao: "Homicídio a oficial",                                           servicos: 60, multa: 50000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "10.3": { descricao: "Latrocínio (roubo seguido de morte)",                           servicos: 50, multa: 40000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "11":   { descricao: "Tentativa de homicídio",                                        servicos: 40, multa: 35000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "11.1": { descricao: "Tentativa a oficial",                                           servicos: 50, multa: 40000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "11.2": { descricao: "Múltiplos homicídios",                                          servicos: 60, multa: 60000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "12":   { descricao: "Sequestro e cárcere privado",                                   servicos: 40, multa: 30000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "12.1": { descricao: "Sequestro a oficial",                                           servicos: 60, multa: 35000,  fianca: 0,      categoria: "Crimes contra a vida" },
+      "12.2": { descricao: "Extorsão mediante sequestro",                                   servicos: 50, multa: 40000,  fianca: 0,      categoria: "Crimes contra a vida" },
+
+      // HONRA
+      "14":   { descricao: "Lei de igualdade (informativo)",                                servicos: 0,  multa: 0,      fianca: 0,      categoria: "Crimes contra a honra" },
+      "14.1": { descricao: "Difamação",                                                     servicos: 15, multa: 6000,   fianca: 14000,  categoria: "Crimes contra a honra" },
+      "14.2": { descricao: "Calúnia",                                                       servicos: 15, multa: 6000,   fianca: 14000,  categoria: "Crimes contra a honra" },
+      "14.3": { descricao: "Injúria",                                                       servicos: 25, multa: 14000,  fianca: 20000,  categoria: "Crimes contra a honra" },
+      "15":   { descricao: "Ameaça",                                                        servicos: 20, multa: 8000,   fianca: 16000,  categoria: "Crimes contra a honra" },
+      "15.1": { descricao: "Ameaça contra oficial",                                         servicos: 30, multa: 10000,  fianca: 20000,  categoria: "Crimes contra a honra" },
+      "15.2": { descricao: "Ameaça com violência",                                          servicos: 30, multa: 10000,  fianca: 20000,  categoria: "Crimes contra a honra" },
+
+      // INTEGRIDADE FÍSICA
+      "17":   { descricao: "Crueldade animal",                                              servicos: 20, multa: 12000,  fianca: 24000,  categoria: "Integridade física e bem-estar" },
+      "18":   { descricao: "Lesão corporal",                                                servicos: 20, multa: 6000,   fianca: 14000,  categoria: "Integridade física e bem-estar" },
+      "19":   { descricao: "Omissão de socorro",                                            servicos: 15, multa: 7000,   fianca: 18000,  categoria: "Integridade física e bem-estar" },
+      "20":   { descricao: "Danos morais",                                                  servicos: 15, multa: 5000,   fianca: 10000,  categoria: "Integridade física e bem-estar" },
+      "20.1": { descricao: "Assédio moral",                                                 servicos: 60, multa: 50000,  fianca: 100000, categoria: "Integridade física e bem-estar" },
+      "21":   { descricao: "Ato obsceno",                                                   servicos: 20, multa: 6000,   fianca: 14000,  categoria: "Integridade física e bem-estar" },
+      "21.1": { descricao: "Atentado ao pudor",                                             servicos: 60, multa: 120000, fianca: 0,      categoria: "Integridade física e bem-estar" },
+
+      // PATRIMÔNIO
+      "23":   { descricao: "Roubo",                                                         servicos: 30, multa: 8000,   fianca: 20000,  categoria: "Crimes contra o patrimônio" },
+      "23.1": { descricao: "Tentativa de roubo",                                            servicos: 20, multa: 6000,   fianca: 14000,  categoria: "Crimes contra o patrimônio" },
+      "23.2": { descricao: "Furto",                                                         servicos: 10, multa: 5000,   fianca: 12000,  categoria: "Crimes contra o patrimônio" },
+      "24":   { descricao: "Assalto à loja",                                                servicos: 40, multa: 15000,  fianca: 32000,  categoria: "Crimes contra o patrimônio" },
+      "25":   { descricao: "Assalto a banco (pequeno porte)",                               servicos: 45, multa: 20000,  fianca: 44000,  categoria: "Crimes contra o patrimônio" },
+      "26":   { descricao: "Assalto à joalheria",                                           servicos: 50, multa: 25000,  fianca: 48000,  categoria: "Crimes contra o patrimônio" },
+      "27":   { descricao: "Assalto ao Banco Central",                                      servicos: 100, multa: 50000, fianca: 120000, categoria: "Crimes contra o patrimônio" },
+      "28":   { descricao: "Roubo a registradora",                                          servicos: 25, multa: 12000,  fianca: 28000,  categoria: "Crimes contra o patrimônio" },
+      "29":   { descricao: "Roubo a caixa eletrônico",                                      servicos: 30, multa: 16000,  fianca: 32000,  categoria: "Crimes contra o patrimônio" },
+      "30":   { descricao: "Assalto a loja de armas",                                       servicos: 40, multa: 18000,  fianca: 38000,  categoria: "Crimes contra o patrimônio" },
+      "31":   { descricao: "Lavagem, ocultação de bens, direitos e valores",                servicos: 60, multa: 34000,  fianca: 76000,  categoria: "Crimes contra o patrimônio" },
+      "32":   { descricao: "Dano ao patrimônio",                                            servicos: 40, multa: 15000,  fianca: 32000,  categoria: "Crimes contra o patrimônio" },
+      "32.1": { descricao: "Invasão à propriedade",                                         servicos: 20, multa: 8000,   fianca: 18000,  categoria: "Crimes contra o patrimônio" },
+      "33":   { descricao: "Receptação",                                                    servicos: 30, multa: 16000,  fianca: 32000,  categoria: "Crimes contra o patrimônio" },
+      "34":   { descricao: "Estelionato",                                                   servicos: 40, multa: 12000,  fianca: 38000,  categoria: "Crimes contra o patrimônio" },
+      "34.1": { descricao: "Extorsão",                                                      servicos: 30, multa: 16000,  fianca: 36000,  categoria: "Crimes contra o patrimônio" },
+      "34.2": { descricao: "Evasão financeira",                                             servicos: 30, multa: 15000,  fianca: 34000,  categoria: "Crimes contra o patrimônio" },
+
+      // TRÁFICO E POSSE
+      "36":   { descricao: "Posse de drogas (até 40g / 5 drogas)",                          servicos: 30, multa: 18000,  fianca: 40000,  categoria: "Tráfico e posse ilegal" },
+      "36.1": { descricao: "Posse ilegal de armas (baixo calibre)",                         servicos: 40, multa: 20000,  fianca: 48000,  categoria: "Tráfico e posse ilegal" },
+      "36.2": { descricao: "Posse de itens de servidores públicos/governamentais",          servicos: 40, multa: 24000,  fianca: 52000,  categoria: "Tráfico e posse ilegal" },
+      "36.3": { descricao: "Posse de dinheiro sujo abaixo de 100.000",                      servicos: 20, multa: 40000,  fianca: 82000,  categoria: "Tráfico e posse ilegal" },
+      "36.4": { descricao: "Posse de dinheiro sujo acima de 100.000",                       servicos: 40, multa: 80000,  fianca: 180000, categoria: "Tráfico e posse ilegal" },
+      "37":   { descricao: "Tráfico de órgãos",                                             servicos: 40, multa: 70000,  fianca: 140000, categoria: "Tráfico e posse ilegal" },
+      "38":   { descricao: "Tráfico de armas e munições",                                   servicos: 50, multa: 70000,  fianca: 160000, categoria: "Tráfico e posse ilegal" },
+      "38.1": { descricao: "Posse de equipamento balístico",                                servicos: 40, multa: 26000,  fianca: 56000,  categoria: "Tráfico e posse ilegal" },
+      "39":   { descricao: "Tráfico de armas calibre médio/alto",                           servicos: 60, multa: 90000,  fianca: 180000, categoria: "Tráfico e posse ilegal" },
+      "40":   { descricao: "Dinheiro sujo abaixo de 40.000",                                servicos: 30, multa: 20000,  fianca: 62000,  categoria: "Tráfico e posse ilegal" },
+
+      // ADMINISTRAÇÃO PÚBLICA
+      "41":   { descricao: "Corrupção passiva",                                             servicos: 40, multa: 30000,  fianca: 80000,  categoria: "Contra a administração pública" },
+      "41.1": { descricao: "Corrupção de autoridade",                                       servicos: 50, multa: 100000, fianca: 220000, categoria: "Contra a administração pública" },
+      "42":   { descricao: "Corrupção ativa",                                               servicos: 60, multa: 60000,  fianca: 140000, categoria: "Contra a administração pública" },
+      "42.1": { descricao: "Tentativa de suborno",                                          servicos: 30, multa: 30000,  fianca: 84000,  categoria: "Contra a administração pública" },
+      "43":   { descricao: "Obstrução de justiça",                                          servicos: 40, multa: 60000,  fianca: 128000, categoria: "Contra a administração pública" },
+      "43.1": { descricao: "Omissão ou obstrução de provas",                               servicos: 30, multa: 30000,  fianca: 64000,  categoria: "Contra a administração pública" },
+      "44":   { descricao: "Prevaricação",                                                  servicos: 60, multa: 80000,  fianca: 160000, categoria: "Contra a administração pública" },
+      "44.1": { descricao: "Abuso de autoridade",                                           servicos: 20, multa: 24000,  fianca: 56000,  categoria: "Contra a administração pública" },
+      "45":   { descricao: "Usurpação de função pública",                                   servicos: 60, multa: 60000,  fianca: 120000, categoria: "Contra a administração pública" },
+      "46":   { descricao: "Abolição violenta do Estado Democrático de Direito",           servicos: 60, multa: 50000,  fianca: 120000, categoria: "Contra a administração pública" },
+      "47":   { descricao: "Associação criminosa",                                          servicos: 40, multa: 18000,  fianca: 40000,  categoria: "Contra a administração pública" },
+      "48":   { descricao: "Falsidade ideológica",                                          servicos: 20, multa: 6000,   fianca: 18000,  categoria: "Contra a administração pública" },
+      "49":   { descricao: "Impossibilidade de identificação",                              servicos: 10, multa: 6000,   fianca: 12000,  categoria: "Contra a administração pública" },
+      "50":   { descricao: "Falso testemunho (perjúrio)",                                   servicos: 40, multa: 40000,  fianca: 86000,  categoria: "Contra a administração pública" },
+      "51":   { descricao: "Lei de propriedade industrial",                                 servicos: 60, multa: 80000,  fianca: 150000, categoria: "Contra a administração pública" },
+      "51.1": { descricao: "Empresa irregular",                                             servicos: 70, multa: 50000,  fianca: 100000, categoria: "Contra a administração pública" },
+      "51.2": { descricao: "Crime contra relações de consumo",                              servicos: 30, multa: 54000,  fianca: 120000, categoria: "Contra a administração pública" },
+      "52":   { descricao: "Venda ilegal de produtos restritos sem licença",                servicos: 25, multa: 40000,  fianca: 90000,  categoria: "Contra a administração pública" },
+      "53":   { descricao: "Favorecimento pessoal",                                         servicos: 40, multa: 30000,  fianca: 90000,  categoria: "Contra a administração pública" },
+
+      // ORDEM PÚBLICA
+      "54":   { descricao: "Desordem social",                                               servicos: 15, multa: 5000,   fianca: 12000,  categoria: "Crimes contra a ordem pública" },
+      "54.1": { descricao: "Apologia ao crime",                                             servicos: 30, multa: 50000,  fianca: 110000, categoria: "Crimes contra a ordem pública" },
+      "55":   { descricao: "Desacato",                                                      servicos: 20, multa: 12000,  fianca: 26000,  categoria: "Crimes contra a ordem pública" },
+      "56":   { descricao: "Desobediência",                                                 servicos: 15, multa: 10000,  fianca: 22000,  categoria: "Crimes contra a ordem pública" },
+      "57":   { descricao: "Resistência à prisão",                                          servicos: 20, multa: 5000,   fianca: 15000,  categoria: "Crimes contra a ordem pública" },
+      "58":   { descricao: "Fuga de pessoa presa",                                          servicos: 20, multa: 16000,  fianca: 38000,  categoria: "Crimes contra a ordem pública" },
+      "58.1": { descricao: "Fuga de abordagem policial",                                    servicos: 20, multa: 8000,   fianca: 20000,  categoria: "Crimes contra a ordem pública" },
+      "59":   { descricao: "Ocultação facial",                                              servicos: 10, multa: 8000,   fianca: 18000,  categoria: "Crimes contra a ordem pública" },
+      "60":   { descricao: "Multas pendentes acima de 50.000",                              servicos: 30, multa: 8000,   fianca: 100000, categoria: "Crimes contra a ordem pública" },
+      "61":   { descricao: "Poluição sonora",                                               servicos: 10, multa: 6000,   fianca: 12000,  categoria: "Crimes contra a ordem pública" },
+      "62":   { descricao: "Não respeitar perímetro da ação",                               servicos: 10, multa: 20000,  fianca: 12000,  categoria: "Crimes contra a ordem pública" },
+      "63":   { descricao: "Excesso de ficha criminal",                                     servicos: 60, multa: 10000,  fianca: 15000,  categoria: "Crimes contra a ordem pública" },
+
+      // TRÂNSITO
+      "66":   { descricao: "Excesso de velocidade",                                         servicos: 0,  multa: 8000,   fianca: 0,      categoria: "Leis de trânsito" },
+      "67":   { descricao: "Atropelamento por imprudência",                                 servicos: 10, multa: 5000,   fianca: 15000,  categoria: "Leis de trânsito" },
+      "68":   { descricao: "Direção perigosa",                                              servicos: 10, multa: 5000,   fianca: 15000,  categoria: "Leis de trânsito" },
+      "68.1": { descricao: "Corrida ilegal",                                                servicos: 20, multa: 14000,  fianca: 34000,  categoria: "Leis de trânsito" },
+      "69":   { descricao: "Veículo em local proibido",                                     servicos: 0,  multa: 4000,   fianca: 0,      categoria: "Leis de trânsito" },
+      "70":   { descricao: "Veículo abandonado",                                            servicos: 0,  multa: 5000,   fianca: 0,      categoria: "Leis de trânsito" },
+      "71":   { descricao: "Veículo danificado (sem condições de segurança)",              servicos: 0,  multa: 3000,   fianca: 0,      categoria: "Leis de trânsito" },
+      "72":   { descricao: "Uso de veículo de terceiros para crimes",                       servicos: 30, multa: 30000,  fianca: 68000,  categoria: "Leis de trânsito" },
+      "73":   { descricao: "Tráfego aéreo irregular",                                       servicos: 50, multa: 30000,  fianca: 80000,  categoria: "Leis de trânsito" },
+      "73.1": { descricao: "Pouso em local indevido",                                       servicos: 10, multa: 40000,  fianca: 0,      categoria: "Leis de trânsito" },
+      "73.2": { descricao: "Pilotagem perigosa",                                            servicos: 10, multa: 50000,  fianca: 0,      categoria: "Leis de trânsito" },
+    };
+
+    // ============================
+    // LÓGICA DA CALCULADORA
+    // ============================
+
+    let listaArtigos = [];
+
+    function formatarMoeda(valor) {
+      return valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        minimumFractionDigits: 0
+      });
+    }
+
+    function atualizarSelectArtigos() {
+      const selectArtigo = document.getElementById("selectArtigo");
+      selectArtigo.innerHTML = '<option value="">Selecione um artigo...</option>';
+
+      // agrupa por categoria
+      const categoriasMap = {};
+      for (const [codigo, dados] of Object.entries(artigos)) {
+        if (!categoriasMap[dados.categoria]) {
+          categoriasMap[dados.categoria] = [];
+        }
+        categoriasMap[dados.categoria].push({ codigo, ...dados });
+      }
+
+      // cria optgroups
+      Object.entries(categoriasMap).forEach(([categoria, lista]) => {
+        const group = document.createElement("optgroup");
+        group.label = categoria;
+        lista.sort((a, b) => a.codigo.localeCompare(b.codigo, "pt-BR", { numeric: true }));
+        lista.forEach(item => {
+          const opt = document.createElement("option");
+          opt.value = item.codigo;
+          opt.textContent = `${item.codigo} - ${item.descricao}`;
+          group.appendChild(opt);
+        });
+        selectArtigo.appendChild(group);
+      });
+    }
+
+    function renderTabela() {
+      const tabela = document.getElementById("tabelaArtigosBody");
+      tabela.innerHTML = "";
+
+      listaArtigos.forEach((item, index) => {
+        tabela.innerHTML += `
+          <tr>
+            <td>${item.codigo}</td>
+            <td>${item.descricao}</td>
+            <td>${item.servicos}</td>
+            <td>${formatarMoeda(item.multa)}</td>
+            <td>${formatarMoeda(item.fianca)}</td>
+            <td><button class="small btn-danger" onclick="removerArtigo(${index})">Remover</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    function atualizarTotais() {
+      const serv = listaArtigos.reduce((s, a) => s + a.servicos, 0);
+      const mult = listaArtigos.reduce((s, a) => s + a.multa, 0);
+      const fia  = listaArtigos.reduce((s, a) => s + a.fianca, 0);
+
+      document.getElementById("totalServicos").textContent = serv;
+      document.getElementById("totalMulta").textContent = formatarMoeda(mult);
+      document.getElementById("totalFianca").textContent = formatarMoeda(fia);
+    }
+
+    function adicionarArtigo(codigoRaw) {
+      const cod = String(codigoRaw).trim();
+      if (!artigos[cod]) {
+        alert("Artigo não encontrado. Confira se digitou igual ao código (ex: 10.1, 23.2).");
+        return;
+      }
+
+      const dados = artigos[cod];
+      let descFinal = dados.descricao;
+
+      const extra = document.getElementById("inputDescricaoExtra").value.trim();
+      if (extra) descFinal += " (" + extra + ")";
+
+      listaArtigos.push({
+        codigo: cod,
+        descricao: descFinal,
+        servicos: dados.servicos,
+        multa: dados.multa,
+        fianca: dados.fianca
+      });
+
+      document.getElementById("inputDescricaoExtra").value = "";
+      document.getElementById("inputCodigo").value = "";
+      document.getElementById("selectArtigo").value = "";
+
+      renderTabela();
+      atualizarTotais();
+    }
+
+    function removerArtigo(i) {
+      listaArtigos.splice(i, 1);
+      renderTabela();
+      atualizarTotais();
+    }
+
+    function calcularPenaFinal() {
+      const totalServicos = listaArtigos.reduce((s, a) => s + a.servicos, 0);
+      const totalMulta = listaArtigos.reduce((s, a) => s + a.multa, 0);
+      const totalFianca = listaArtigos.reduce((s, a) => s + a.fianca, 0);
+
+      if (listaArtigos.length === 0) {
+        alert("Adicione artigos antes de calcular!");
+        return;
+      }
+
+      let pena = totalServicos;
+
+      // Reduções Litoral City (baseadas nas observações gerais)
+      if (document.getElementById("chkReuPrimario").checked) pena *= 0.70; // -30%
+      if (document.getElementById("chkColaboracao").checked) pena *= 0.90; // -10%
+      if (document.getElementById("chkAdvogado").checked)    pena *= 0.70; // -30%
+      if (document.getElementById("chkConfissao").checked)   pena *= 0.50; // -50%
+
+      pena = Math.round(pena);
+
+      document.getElementById("penaFinal").textContent = pena;
+      document.getElementById("resultadoMulta").textContent = formatarMoeda(totalMulta);
+      document.getElementById("resultadoFianca").textContent = formatarMoeda(totalFianca);
+
+      // Status RP
+      let status = "";
+      let detalhe = "";
+
+      if (totalFianca > 0 && pena <= 25) {
+        status = "LIBERADO MEDIANTE FIANÇA";
+        detalhe = "Réu pode pagar a fiança para ser liberado, conforme critério da autoridade.";
+      } else if (pena <= 30) {
+        status = "PENA MODERADA";
+        detalhe = "Possível acordo ou redução extra dependendo do oficial e da situação.";
+      } else {
+        status = "PRISÃO";
+        detalhe = "Cumprimento integral da pena conforme Código Penal da Litoral City.";
+      }
+
+      document.getElementById("statusRP").textContent = status;
+      document.getElementById("statusRPDetalhe").textContent = detalhe;
+    }
+
+    // Eventos
+    document.getElementById("btnAdicionar").onclick = () => {
+      const codigo = document.getElementById("inputCodigo").value || document.getElementById("selectArtigo").value;
+      if (!codigo) {
+        alert("Digite um código ou selecione um artigo.");
+        return;
+      }
+      adicionarArtigo(codigo);
+    };
+
+    document.getElementById("btnCalcularFinal").onclick = calcularPenaFinal;
+
+    document.getElementById("inputCodigo").addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        const codigo = document.getElementById("inputCodigo").value;
+        if (codigo) adicionarArtigo(codigo);
+      }
+    });
+
+    // Inicializa select
+    atualizarSelectArtigos();
+  </script>
 </body>
 </html>
