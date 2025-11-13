@@ -101,8 +101,21 @@
       outline: none;
     }
 
-    input:focus, select:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: #38bdf8;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      padding: 8px 10px;
+      margin-top: 4px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+      resize: vertical;
     }
 
     button {
@@ -247,7 +260,7 @@
 
   <!-- LOGO -->
   <div class="logo-wrap">
-    <!-- Certifique-se de que o arquivo existe no repositório com esse nome -->
+    <!-- Coloque a sua logo com esse nome no repositório -->
     <img src="LITORAL_CITY_2.gif" alt="Litoral City Roleplay">
   </div>
 
@@ -258,6 +271,19 @@
     <!-- BLOCO: ADICIONAR ARTIGOS -->
     <div class="card">
       <h2>Adicionar artigo</h2>
+
+      <!-- Nome e CPF -->
+      <div class="grid" style="margin-top: 4px; margin-bottom: 8px;">
+        <div>
+          <label for="inputNome">Nome do detento</label>
+          <input type="text" id="inputNome" placeholder="Ex: Nando Pimenta" />
+        </div>
+        <div>
+          <label for="inputCPF">CPF do detento</label>
+          <input type="text" id="inputCPF" placeholder="Ex: 10431" />
+        </div>
+      </div>
+
       <p style="font-size: 13px; color:#9ca3af; margin-bottom:6px;">
         Digite o número do artigo (ex: <b>10</b>, <b>10.1</b>, <b>23.2</b>...) ou selecione na lista e clique em <b>Adicionar</b>.
       </p>
@@ -333,6 +359,19 @@
           <div class="result-main" id="statusRP">—</div>
           <div class="result-extra" id="statusRPDetalhe">Adicione artigos e calcule.</div>
         </div>
+      </div>
+    </div>
+
+    <!-- RESUMO PARA DISCORD -->
+    <div class="card" style="margin-top:16px;">
+      <h2>Resumo para Discord</h2>
+      <p style="font-size: 13px; color:#9ca3af; margin-bottom:6px;">
+        Depois de calcular, o texto abaixo já fica pronto para colar no Discord.
+      </p>
+      <textarea id="resumoDiscord" readonly placeholder="Calcule a pena para gerar o resumo."></textarea>
+      <div style="margin-top: 6px; display:flex; align-items:center; gap:8px;">
+        <button id="btnCopiarResumo">Copiar texto</button>
+        <span id="copyMsg" style="font-size:11px;color:#9ca3af;"></span>
       </div>
     </div>
 
@@ -463,11 +502,17 @@
 
     let listaArtigos = [];
 
+    const inputNome = document.getElementById("inputNome");
+    const inputCPF = document.getElementById("inputCPF");
+    const resumoDiscord = document.getElementById("resumoDiscord");
+    const btnCopiarResumo = document.getElementById("btnCopiarResumo");
+    const copyMsg = document.getElementById("copyMsg");
+
     function formatarMoeda(valor) {
       return valor.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
-        minimumFractionDigits: 0
+        minimumFractionDigits: 2
       });
     }
 
@@ -475,7 +520,6 @@
       const selectArtigo = document.getElementById("selectArtigo");
       selectArtigo.innerHTML = '<option value="">Selecione um artigo...</option>';
 
-      // agrupa por categoria
       const categoriasMap = {};
       for (const [codigo, dados] of Object.entries(artigos)) {
         if (!categoriasMap[dados.categoria]) {
@@ -484,7 +528,6 @@
         categoriasMap[dados.categoria].push({ codigo, ...dados });
       }
 
-      // cria optgroups
       Object.entries(categoriasMap).forEach(([categoria, lista]) => {
         const group = document.createElement("optgroup");
         group.label = categoria;
@@ -562,6 +605,34 @@
       atualizarTotais();
     }
 
+    function atualizarResumoDiscord(pena, totalMulta, totalFianca, status, detalhe) {
+      const nome = inputNome.value.trim() || "Não informado";
+      const cpf = inputCPF.value.trim() || "Não informado";
+      const artigosCodigos = listaArtigos.map(a => a.codigo).join(", ") || "Nenhum";
+
+      let linhaStatus = detalhe;
+      if (status === "LIBERADO MEDIANTE FIANÇA") {
+        linhaStatus = "Indivíduo segue em liberdade por pagamento total da fiança.";
+      } else if (status === "PENA MODERADA") {
+        linhaStatus = "Pena moderada. Verificar possibilidades de acordo conforme RP.";
+      } else if (status === "PRISÃO") {
+        linhaStatus = "Indivíduo segue preso para cumprimento integral da pena.";
+      }
+
+      const texto = `${status}
+${linhaStatus}
+
+Nome: ${nome}
+CPF: ${cpf}
+Artigos: ${artigosCodigos}
+Pena: ${pena} meses
+Multa: ${formatarMoeda(totalMulta)}
+Fiança: ${formatarMoeda(totalFianca)}`;
+
+      resumoDiscord.value = texto;
+      copyMsg.textContent = "";
+    }
+
     function calcularPenaFinal() {
       const totalServicos = listaArtigos.reduce((s, a) => s + a.servicos, 0);
       const totalMulta = listaArtigos.reduce((s, a) => s + a.multa, 0);
@@ -574,7 +645,6 @@
 
       let pena = totalServicos;
 
-      // Reduções Litoral City (baseadas nas observações gerais)
       if (document.getElementById("chkReuPrimario").checked) pena *= 0.70; // -30%
       if (document.getElementById("chkColaboracao").checked) pena *= 0.90; // -10%
       if (document.getElementById("chkAdvogado").checked)    pena *= 0.70; // -30%
@@ -586,7 +656,6 @@
       document.getElementById("resultadoMulta").textContent = formatarMoeda(totalMulta);
       document.getElementById("resultadoFianca").textContent = formatarMoeda(totalFianca);
 
-      // Status RP
       let status = "";
       let detalhe = "";
 
@@ -603,6 +672,8 @@
 
       document.getElementById("statusRP").textContent = status;
       document.getElementById("statusRPDetalhe").textContent = detalhe;
+
+      atualizarResumoDiscord(pena, totalMulta, totalFianca, status, detalhe);
     }
 
     // Eventos
@@ -621,6 +692,23 @@
       if (e.key === "Enter") {
         const codigo = document.getElementById("inputCodigo").value;
         if (codigo) adicionarArtigo(codigo);
+      }
+    });
+
+    btnCopiarResumo.addEventListener("click", async () => {
+      const texto = resumoDiscord.value.trim();
+      if (!texto) {
+        alert("Calcule a pena primeiro para gerar o texto.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(texto);
+        copyMsg.textContent = "Texto copiado!";
+      } catch (err) {
+        resumoDiscord.select();
+        document.execCommand("copy");
+        copyMsg.textContent = "Texto copiado!";
       }
     });
 
