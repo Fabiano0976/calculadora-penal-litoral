@@ -5,7 +5,7 @@
   <title>Calculadora Penal Litoral City</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonte estilo “gamer” parecida com o exemplo -->
+  <!-- Fonte estilo “gamer” -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
@@ -37,7 +37,6 @@
       overflow: hidden;
     }
 
-    /* brilho azul de fundo */
     .page-wrap::before {
       content: "";
       position: absolute;
@@ -363,6 +362,29 @@
       color: #38bdf8;
     }
 
+    /* destino */
+    .situacao-opcoes {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4px;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .situacao-opcoes label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: #e5e7eb;
+    }
+
+    .situacao-opcoes input[type="radio"] {
+      width: 15px;
+      height: 15px;
+      accent-color: #38bdf8;
+    }
+
     @media (max-width: 960px) {
       .layout {
         grid-template-columns: 1fr;
@@ -486,6 +508,10 @@
             <input type="checkbox" id="chkDelacao" />
             Delação premiada (-50%)
           </label>
+          <label>
+            <input type="checkbox" id="chkConfesso" />
+            Réu confesso (-15%)
+          </label>
         </div>
 
         <div style="margin-top: 10px; margin-bottom: 10px;">
@@ -512,6 +538,20 @@
         </div>
 
         <div class="result-block">
+          <div class="result-label">Destino</div>
+          <div class="situacao-opcoes">
+            <label>
+              <input type="radio" name="destino" value="detencao" checked />
+              Foi encaminhado para o Centro de Detenção.
+            </label>
+            <label>
+              <input type="radio" name="destino" value="fianca" />
+              Pagou a fiança e foi liberado.
+            </label>
+          </div>
+        </div>
+
+        <div class="result-block">
           <div class="result-label">Resumo para Discord</div>
           <textarea id="resumoDiscord" readonly>Calcule a pena para gerar o texto.</textarea>
           <div class="discord-actions">
@@ -532,7 +572,6 @@
     // TABELA DE ARTIGOS - LITORAL CITY
     // ============================
 
-    // Formato: "codigo" : { descricao, servicos, multa, fianca }
     const artigos = {
       // --- CRIMES CONTRA A VIDA ---
       "10":   { d: "Homicídio doloso (matar alguém com intenção)", s: 60, m: 60000, f: 0 },
@@ -664,6 +703,7 @@
     const chkAdvogado = document.getElementById("chkAdvogado");
     const chkCooperacao = document.getElementById("chkCooperacao");
     const chkDelacao = document.getElementById("chkDelacao");
+    const chkConfesso = document.getElementById("chkConfesso");
 
     const inputNome = document.getElementById("inputNome");
     const inputCpf = document.getElementById("inputCpf");
@@ -779,6 +819,18 @@
       renderTabela();
     }
 
+    function obterDestinoTexto() {
+      const selecionado = document.querySelector("input[name='destino']:checked");
+      if (!selecionado) return "Situação não informada.";
+      if (selecionado.value === "detencao") {
+        return "Foi encaminhado para o Centro de Detenção.";
+      }
+      if (selecionado.value === "fianca") {
+        return "Pagou a fiança e foi liberado.";
+      }
+      return "Situação não informada.";
+    }
+
     function calcular() {
       if (lista.length === 0) {
         alert("Adicione pelo menos um artigo antes de calcular.");
@@ -790,9 +842,10 @@
       const totalFianca = lista.reduce((s, a) => s + a.fianca, 0);
 
       if (chkReuPrimario.checked) totalServ *= 0.7;
-      if (chkAdvogado.checked) totalServ *= 0.7;
+      if (chkAdvogado.checked)  totalServ *= 0.7;
       if (chkCooperacao.checked) totalServ *= 0.9;
-      if (chkDelacao.checked) totalServ *= 0.5;
+      if (chkDelacao.checked)    totalServ *= 0.5;
+      if (chkConfesso.checked)   totalServ *= 0.85; // -15%
 
       totalServ = Math.round(totalServ);
       if (totalServ < 0) totalServ = 0;
@@ -806,10 +859,10 @@
 
       if (totalServ === 0 && totalFianca > 0) {
         tipo = "***LIBERDADE***";
-        detalhe = "Indivíduo segue em liberdade mediante pagamento total da fiança.";
+        detalhe = "Indivíduo segue em liberdade mediante pagamento da fiança.";
       } else if (totalServ > 0 && totalServ <= 25) {
         tipo = "***PENA PARCIAL***";
-        detalhe = "Pena moderada. possível acordo ou regime mais brando, conforme RP.";
+        detalhe = "Pena moderada, possível acordo ou regime mais brando, conforme RP.";
       } else {
         tipo = "***PRISÃO***";
         detalhe = "Indivíduo segue preso para cumprimento integral da pena.";
@@ -821,16 +874,20 @@
       const nome = inputNome.value.trim() || "Não informado";
       const cpf = inputCpf.value.trim() || "Não informado";
       const artigosLista = lista.map(a => a.codigo).join(", ");
+      const destinoTexto = obterDestinoTexto();
 
       let resumo = "";
       resumo += tipo + "\n";
-      resumo += detalhe + "\n\n";
+      resumo += detalhe + "\n";
+      resumo += "> Situação: " + destinoTexto + "\n";
+      resumo += "━━━━━━━━━━━━━━━━━━━━━━\n";
       resumo += "Nome: " + nome + "\n";
       resumo += "CPF: " + cpf + "\n";
       resumo += "Artigos: " + artigosLista + "\n";
       resumo += "Pena: " + totalServ + " meses\n";
       resumo += "Multa: " + formatarMoeda(totalMulta) + "\n";
-      resumo += "Fiança: " + formatarMoeda(totalFianca) + "***";
+      resumo += "Fiança: " + formatarMoeda(totalFianca) + "\n";
+      resumo += "━━━━━━━━━━━━━━━━━━━━━━";
 
       resumoDiscord.value = resumo;
     }
