@@ -5,7 +5,7 @@
   <title>Calculadora Penal Litoral City</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonte estilo “polícia / HUD” -->
+  <!-- Fonte estilo “HUD” -->
   <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -16,7 +16,7 @@
     }
 
     body {
-      background: radial-gradient(circle at top left, #1e293b, #020617 55%);
+      background: radial-gradient(circle at top left, #0f172a, #020617 60%);
       color: #e5e7eb;
       padding: 24px;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -25,20 +25,32 @@
     .container {
       max-width: 1150px;
       margin: 0 auto;
-      background: rgba(15,23,42,0.96);
+      background: rgba(15,23,42,0.97);
       border-radius: 20px;
       padding: 20px 24px 24px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.8);
       border: 1px solid #1f2937;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+
+    .logo img {
+      max-width: 210px;
+      height: auto;
+      filter: drop-shadow(0 0 18px rgba(56,189,248,0.55));
     }
 
     h1 {
       text-align: center;
       margin-bottom: 4px;
       font-size: 34px;
-      color: #facc15;
+      color: #38bdf8;
       font-family: "Teko", system-ui, sans-serif;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.09em;
     }
 
     h2 {
@@ -64,7 +76,7 @@
     }
 
     .card {
-      background: rgba(15,23,42,0.95);
+      background: rgba(15,23,42,0.98);
       border-radius: 16px;
       padding: 14px 16px;
       border: 1px solid #1f2937;
@@ -93,13 +105,15 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: #facc15;
-      box-shadow: 0 0 0 1px rgba(250,204,21,0.4);
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.4);
     }
 
     textarea {
       min-height: 130px;
       resize: vertical;
+      font-family: "Consolas", "Courier New", monospace;
+      line-height: 1.45;
     }
 
     .row {
@@ -115,23 +129,22 @@
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      background: #facc15;
-      color: #111827;
+      background: #38bdf8;
+      color: #020617;
       transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
       font-family: "Teko", system-ui, sans-serif;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
     }
 
     button:hover {
-      background: #eab308;
+      background: #0ea5e9;
       transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(250,204,21,0.35);
+      box-shadow: 0 12px 24px rgba(56,189,248,0.45);
     }
 
     button.small {
       padding: 4px 12px;
       font-size: 12px;
-      border-radius: 999px;
     }
 
     .btn-danger {
@@ -160,9 +173,10 @@
     th {
       background: #020617;
       font-family: "Teko", system-ui, sans-serif;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
       font-weight: 500;
       font-size: 13px;
+      color: #bae6fd;
     }
 
     .totais {
@@ -181,14 +195,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid #374151;
+      border: 1px solid #1f2937;
     }
 
     .badge span {
       font-weight: 700;
-      color: #facc15;
+      color: #38bdf8;
       font-family: "Teko", system-ui, sans-serif;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
     }
 
     .checks {
@@ -209,7 +223,7 @@
     .checks input[type="checkbox"] {
       width: 15px;
       height: 15px;
-      accent-color: #facc15;
+      accent-color: #38bdf8;
     }
 
     .result-block {
@@ -217,7 +231,7 @@
       padding: 8px 10px;
       border-radius: 12px;
       background: #020617;
-      border: 1px solid #4b5563;
+      border: 1px solid #1f2937;
       font-size: 13px;
     }
 
@@ -233,10 +247,10 @@
     .result-main {
       font-size: 22px;
       font-weight: 700;
-      color: #facc15;
+      color: #38bdf8;
       margin-bottom: 4px;
       font-family: "Teko", system-ui, sans-serif;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
     }
 
     .footer {
@@ -269,17 +283,22 @@
 </head>
 <body>
   <div class="container">
+    <div class="logo">
+      <!-- TROCAR o nome do arquivo aqui se você subir com outro nome -->
+      <img src="litoral-logo.png" alt="Litoral City Roleplay" />
+    </div>
+
     <h1>CALCULADORA PENAL LITORAL CITY</h1>
     <p class="subtitle">Calcule serviços, multa e fiança com base no Código Penal da Litoral City e gere texto pronto para o Discord.</p>
 
     <div class="grid-main">
-      <!-- LADO ESQUERDO: DADOS E ARTIGOS -->
+      <!-- ESQUERDA -->
       <div class="card">
         <h2>Dados do detento</h2>
         <div class="row">
           <div>
             <label for="inputNome">Nome</label>
-            <input type="text" id="inputNome" placeholder="Ex: Fiocoderik" />
+            <input type="text" id="inputNome" placeholder="Ex: Wood" />
           </div>
           <div>
             <label for="inputCPF">CPF</label>
@@ -330,7 +349,7 @@
         </div>
       </div>
 
-      <!-- LADO DIREITO: REDUÇÕES, RESULTADO E DISCORD -->
+      <!-- DIREITA -->
       <div class="card">
         <h2>Reduções / Benefícios</h2>
         <div class="checks">
@@ -374,10 +393,9 @@
     </div>
   </div>
 
+  <!-- JS: MESMO CÓDIGO ANTERIOR (artigos + cálculo + texto Discord) -->
   <script>
-    /* ============================
-       TABELA DO CÓDIGO PENAL LITORAL CITY
-       ============================ */
+    /* ====== TABELA DO CÓDIGO PENAL ====== */
     const artigos = {
       "10":   { descricao: "Homicídio doloso (matar alguém com intenção)",                   servicos: 60, multa: 60000,  fianca: 0,      categoria: "Crimes contra a vida" },
       "10.1": { descricao: "Homicídio culposo (matar alguém sem intenção)",                 servicos: 40, multa: 40000,  fianca: 0,      categoria: "Crimes contra a vida" },
@@ -481,9 +499,6 @@
       "73.2": { descricao: "Pilotagem perigosa",                                            servicos: 10, multa: 50000,  fianca: 0,      categoria: "Leis de trânsito" },
     };
 
-    /* ============================
-       LÓGICA
-       ============================ */
     let listaArtigos = [];
 
     const inputNome = document.getElementById("inputNome");
@@ -584,22 +599,22 @@
     }
     window.removerArtigo = removerArtigo;
 
-    function atualizarResumoDiscord(pena, totalMulta, totalFianca, statusCod, fraseStatus) {
+    function atualizarResumoDiscord(pena, totalMulta, totalFianca, statusCod) {
       const nome = inputNome.value.trim() || "Não informado";
       const cpf = inputCPF.value.trim() || "Não informado";
       const artigosCodigos = listaArtigos.map(a => a.codigo).join(", ") || "Nenhum";
 
-      let linha = fraseStatus;
+      let linhaStatus;
       if (statusCod === "PRISÃO") {
-        linha = "Indivíduo segue preso para cumprimento integral da pena.";
+        linhaStatus = "Indivíduo segue preso para cumprimento integral da pena.";
       } else if (statusCod === "LIBERDADE") {
-        linha = "Indivíduo segue em liberdade mediante pagamento total da fiança.";
-      } else if (statusCod === "PENA PARCIAL") {
-        linha = "Pena moderada. Possível acordo ou redução extra, conforme RP.";
+        linhaStatus = "Indivíduo segue em liberdade por pagamento total da fiança.";
+      } else {
+        linhaStatus = "Pena parcial, conforme RP.";
       }
 
       const texto = `***${statusCod}***
-${linha}
+${linhaStatus}
 
 Nome: ${nome}
 CPF: ${cpf}
@@ -652,10 +667,9 @@ Fiança: ${formatarMoeda(totalFianca)}***`;
       document.getElementById("statusRP").textContent = statusCod;
       document.getElementById("statusRPDetalhe").textContent = detalhe;
 
-      atualizarResumoDiscord(pena, totalMulta, totalFianca, statusCod, detalhe);
+      atualizarResumoDiscord(pena, totalMulta, totalFianca, statusCod);
     }
 
-    // Eventos principais
     document.getElementById("btnAdicionar").addEventListener("click", () => {
       const cod = document.getElementById("inputCodigo").value || document.getElementById("selectArtigo").value;
       if (!cod) {
@@ -690,7 +704,6 @@ Fiança: ${formatarMoeda(totalFianca)}***`;
       }
     });
 
-    // Inicializa select
     atualizarSelectArtigos();
   </script>
 </body>
