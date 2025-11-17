@@ -413,7 +413,20 @@
       header img {
         height: 52px;
       }
-    }
+    .wrapper {
+  max-width: 1700px;   /* antes era ~1200px, agora bem mais largo */
+  width: 100%;         /* ocupa toda a largura possível */
+  margin: 0 auto;      /* continua centralizado */
+  padding: 32px 48px;  /* um pouco mais de respiro nas bordas */
+}
+
+@media (max-width: 1024px) {
+  /* No celular / telas menores continua ajustando certinho */
+  .wrapper {
+    max-width: 100%;
+    padding: 16px;
+  }
+}
   </style>
 </head>
 <body>
