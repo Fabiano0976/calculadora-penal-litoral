@@ -14,7 +14,7 @@
     }
 
     body {
-      background: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+      background: #020617;
       color: #e5e7eb;
       min-height: 100vh;
       padding: 24px;
@@ -23,10 +23,10 @@
     .page {
       max-width: 1200px;
       margin: 0 auto;
-      background: rgba(15,23,42,0.96);
+      background: #020617;
       border-radius: 16px;
-      border: 1px solid #1f2937;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      border: 1px solid #111827;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       padding: 24px 28px 20px;
     }
 
@@ -48,20 +48,14 @@
       color: #9ca3af;
     }
 
-    .logo {
-      display: block;
-      margin: 8px auto 0;
-      max-height: 80px;
-    }
-
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
       gap: 18px;
     }
 
     .card {
-      background: rgba(15,23,42,0.98);
+      background: #020617;
       border-radius: 12px;
       border: 1px solid #111827;
       padding: 14px 16px;
@@ -212,7 +206,7 @@
     }
 
     .result-box {
-      background: radial-gradient(circle at top left,#0b1120,#020617);
+      background: #020617;
       border-radius: 10px;
       border: 1px solid #111827;
       padding: 10px 12px;
@@ -303,12 +297,10 @@
     <header>
       <h1>CALCULADORA PENAL LITORAL CITY</h1>
       <p>Calcule serviços, multa e fiança com base no Código Penal da Litoral City e gere texto pronto para o Discord.</p>
-      <!-- se quiser mostrar a logo, troque o src pelo link do seu PNG -->
-      <!-- <img class="logo" src="litoral-logo.png" alt="Litoral City Roleplay" /> -->
     </header>
 
     <div class="layout">
-      <!-- ESQUERDA: DETENTO + ARTIGOS -->
+      <!-- ESQUERDA -->
       <section class="card">
         <h2>Dados do detento</h2>
         <div class="row">
@@ -347,12 +339,12 @@
         <table>
           <thead>
             <tr>
-              <th style="width:50px;">Cód.</th>
+              <th style="width:60px;">Cód.</th>
               <th>Descrição</th>
               <th style="width:70px;">Serv.</th>
               <th style="width:90px;">Multa</th>
               <th style="width:90px;">Fiança</th>
-              <th style="width:54px;"></th>
+              <th style="width:50px;"></th>
             </tr>
           </thead>
           <tbody id="tabelaArtigosBody"></tbody>
@@ -365,7 +357,7 @@
         </div>
       </section>
 
-      <!-- DIREITA: REDUÇÕES + RESULTADO + RESUMO -->
+      <!-- DIREITA -->
       <aside class="card">
         <h2>Reduções / Benefícios</h2>
         <div class="checks">
@@ -380,8 +372,7 @@
           <div class="result-label">Pena de serviços</div>
           <div class="result-main"><span id="penaFinal">0</span> meses</div>
           <div style="font-size:12px; color:#d1d5db;">
-            Multa total: <b id="resultadoMulta">R$ 0</b> •
-            Fiança total: <b id="resultadoFianca">R$ 0</b>
+            Multa total: <b id="resultadoMulta">R$ 0</b> • Fiança total: <b id="resultadoFianca">R$ 0</b>
           </div>
         </div>
 
@@ -395,7 +386,7 @@
 
         <h2 style="margin-top:10px;">Situação para Discord</h2>
         <p style="font-size:11px; color:#9ca3af; margin-bottom:4px;">
-          Escolha o tipo de resultado que você vai aplicar ao detento.
+          Escolha o tipo de resultado e copie o texto pronto.
         </p>
         <div class="status-buttons">
           <button type="button" class="status-btn active" data-status="prisao">PRISÃO</button>
@@ -419,10 +410,7 @@
   </div>
 
   <script>
-    // ==========================
-    // TABELA DE ARTIGOS - LITORAL
-    // (Resumo; preencha mais se quiser)
-    // ==========================
+    // --- TABELA DE ARTIGOS (exemplo, baseado no seu código penal) ---
     const artigos = {
       "10":   { desc: "Homicídio doloso (matar alguém com intenção)", serv: 60, multa: 60000, fianca: 0 },
       "10.1": { desc: "Homicídio culposo (sem intenção)", serv: 40, multa: 40000, fianca: 0 },
@@ -446,17 +434,13 @@
       "17":   { desc: "Crueldade animal", serv: 20, multa: 12000, fianca: 24000 },
       "18":   { desc: "Lesão corporal", serv: 20, multa: 6000, fianca: 14000 },
       "19":   { desc: "Omissão de socorro", serv: 15, multa: 7000, fianca: 18000 },
-      "20":   { desc: "Danos morais / à imagem", serv: 15, multa: 5000, fianca: 10000 },
+      "20":   { desc: "Danos morais / imagem", serv: 15, multa: 5000, fianca: 10000 },
       "20.1": { desc: "Assédio moral", serv: 60, multa: 50000, fianca: 100000 },
       "21":   { desc: "Ato obsceno", serv: 20, multa: 6000, fianca: 14000 },
-      "21.1": { desc: "Atentado ao pudor", serv: 60, multa: 120000, fianca: 0 },
-
-      // ... (se quiser, continue adicionando TODOS os artigos do seu código aqui)
+      "21.1": { desc: "Atentado ao pudor", serv: 60, multa: 120000, fianca: 0 }
+      // continue daqui se quiser colocar TODO o código penal
     };
 
-    // ==============
-    // ELEMENTOS
-    // ==============
     const inputNome = document.getElementById("nomeDetento");
     const inputCpf = document.getElementById("cpfDetento");
     const inputCodigo = document.getElementById("inputCodigo");
@@ -481,19 +465,14 @@
     const statusDetalheSpan = document.getElementById("statusDetalhe");
 
     const textoDiscord = document.getElementById("textoDiscord");
-
     const btnAdicionar = document.getElementById("btnAdicionar");
     const btnCalcular = document.getElementById("btnCalcular");
     const btnCopiar = document.getElementById("btnCopiar");
-
     const statusButtons = document.querySelectorAll(".status-btn");
 
     let listaArtigos = [];
     let statusAtual = "prisao";
 
-    // ==============
-    // FUNÇÕES
-    // ==============
     function formatarMoeda(valor) {
       return valor.toLocaleString("pt-BR", {
         style: "currency",
@@ -502,16 +481,13 @@
     }
 
     function popularSelect() {
-      Object.keys(artigos).sort((a,b) => {
-        const na = parseFloat(a);
-        const nb = parseFloat(b);
-        return na - nb;
-      }).forEach(cod => {
-        const opt = document.createElement("option");
-        opt.value = cod;
-        opt.textContent = "Art. " + cod + " - " + artigos[cod].desc;
-        selectArtigo.appendChild(opt);
-      });
+      Object.keys(artigos).sort((a,b) => parseFloat(a) - parseFloat(b))
+        .forEach(cod => {
+          const opt = document.createElement("option");
+          opt.value = cod;
+          opt.textContent = "Art. " + cod + " - " + artigos[cod].desc;
+          selectArtigo.appendChild(opt);
+        });
     }
 
     function atualizarTabela() {
@@ -519,52 +495,36 @@
       listaArtigos.forEach((item, index) => {
         const tr = document.createElement("tr");
 
-        const tdCod = document.createElement("td");
-        tdCod.textContent = item.codigo;
-        tr.appendChild(tdCod);
+        tr.innerHTML = `
+          <td>${item.codigo}</td>
+          <td>${item.descricao}</td>
+          <td>${item.servicos}</td>
+          <td>${formatarMoeda(item.multa)}</td>
+          <td>${formatarMoeda(item.fianca)}</td>
+          <td><button data-index="${index}" style="padding:3px 8px;font-size:11px;">X</button></td>
+        `;
+        tabelaBody.appendChild(tr);
+      });
 
-        const tdDesc = document.createElement("td");
-        tdDesc.textContent = item.descricao;
-        tr.appendChild(tdDesc);
-
-        const tdServ = document.createElement("td");
-        tdServ.textContent = item.servicos;
-        tr.appendChild(tdServ);
-
-        const tdMulta = document.createElement("td");
-        tdMulta.textContent = formatarMoeda(item.multa);
-        tr.appendChild(tdMulta);
-
-        const tdFianca = document.createElement("td");
-        tdFianca.textContent = formatarMoeda(item.fianca);
-        tr.appendChild(tdFianca);
-
-        const tdAcoes = document.createElement("td");
-        const btn = document.createElement("button");
-        btn.textContent = "X";
-        btn.style.padding = "3px 8px";
-        btn.style.fontSize = "11px";
-        btn.onclick = () => {
-          listaArtigos.splice(index, 1);
+      tabelaBody.querySelectorAll("button[data-index]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const i = Number(btn.dataset.index);
+          listaArtigos.splice(i,1);
           atualizarTotais();
           atualizarTabela();
           atualizarResumo();
-        };
-        tdAcoes.appendChild(btn);
-        tr.appendChild(tdAcoes);
-
-        tabelaBody.appendChild(tr);
+        });
       });
     }
 
     function atualizarTotais() {
-      const totalServicos = listaArtigos.reduce((s,a) => s + a.servicos, 0);
-      const totalMulta = listaArtigos.reduce((s,a) => s + a.multa, 0);
-      const totalFianca = listaArtigos.reduce((s,a) => s + a.fianca, 0);
+      const totalServ = listaArtigos.reduce((s,a) => s + a.servicos, 0);
+      const totalMul = listaArtigos.reduce((s,a) => s + a.multa, 0);
+      const totalFia = listaArtigos.reduce((s,a) => s + a.fianca, 0);
 
-      totalServicosSpan.textContent = totalServicos;
-      totalMultaSpan.textContent = formatarMoeda(totalMulta);
-      totalFiancaSpan.textContent = formatarMoeda(totalFianca);
+      totalServicosSpan.textContent = totalServ;
+      totalMultaSpan.textContent = formatarMoeda(totalMul);
+      totalFiancaSpan.textContent = formatarMoeda(totalFia);
     }
 
     function adicionarArtigo(codigo) {
@@ -572,18 +532,18 @@
       if (!cod) return;
 
       if (!artigos[cod]) {
-        alert("Artigo não encontrado. Adicione no script se quiser usá-lo.");
+        alert("Artigo não encontrado na tabela. Adicione no script se precisar.");
         return;
       }
 
       const base = artigos[cod];
-      let descFinal = base.desc;
+      let desc = base.desc;
       const extra = inputObs.value.trim();
-      if (extra) descFinal += " (" + extra + ")";
+      if (extra) desc += " (" + extra + ")";
 
       listaArtigos.push({
         codigo: cod,
-        descricao: descFinal,
+        descricao: desc,
         servicos: base.serv,
         multa: base.multa,
         fianca: base.fianca
@@ -592,16 +552,15 @@
       inputCodigo.value = "";
       inputObs.value = "";
       selectArtigo.value = "";
-
-      atualizarTabela();
       atualizarTotais();
+      atualizarTabela();
       atualizarResumo();
     }
 
     function calcularPenaFinal() {
       let pena = listaArtigos.reduce((s,a) => s + a.servicos, 0);
 
-      if (pena === 0 && listaArtigos.length === 0) {
+      if (listaArtigos.length === 0) {
         alert("Adicione pelo menos um artigo.");
         return;
       }
@@ -614,32 +573,31 @@
       pena = Math.round(pena);
       if (pena < 0) pena = 0;
 
-      const totalMulta = listaArtigos.reduce((s,a) => s + a.multa, 0);
-      const totalFianca = listaArtigos.reduce((s,a) => s + a.fianca, 0);
+      const totalMul = listaArtigos.reduce((s,a) => s + a.multa, 0);
+      const totalFia = listaArtigos.reduce((s,a) => s + a.fianca, 0);
 
       penaFinalSpan.textContent = pena;
-      resultadoMultaSpan.textContent = formatarMoeda(totalMulta);
-      resultadoFiancaSpan.textContent = formatarMoeda(totalFianca);
+      resultadoMultaSpan.textContent = formatarMoeda(totalMul);
+      resultadoFiancaSpan.textContent = formatarMoeda(totalFia);
 
-      // STATUS SUGERIDO
       let status = "";
       let detalhe = "";
 
-      if (pena === 0 && totalMulta > 0 && totalFianca === 0) {
+      if (pena === 0 && totalMul > 0 && totalFia === 0) {
         status = "MULTA";
         detalhe = "Apenas multa aplicável. Considere liberação após pagamento.";
-      } else if (pena === 0 && totalFianca > 0) {
+      } else if (pena === 0 && totalFia > 0) {
         status = "LIBERDADE MEDIANTE FIANÇA";
         detalhe = "Sem serviços, apenas multa e/ou fiança.";
-      } else if (pena > 0 && totalFianca > 0 && pena <= 25) {
+      } else if (pena > 0 && totalFia > 0 && pena <= 25) {
         status = "PENA PARCIAL";
-        detalhe = "Possível acordo com pagamento de fiança/multa e parte da pena.";
+        detalhe = "Possível acordo com pagamento e parte da pena.";
       } else if (pena > 0) {
         status = "PRISÃO";
-        detalhe = "Cumprimento integral ou majoritário da pena de serviços.";
+        detalhe = "Cumprimento da pena de serviços conforme código penal.";
       } else {
         status = "—";
-        detalhe = "Ajuste os artigos ou reduções para definir um status.";
+        detalhe = "Ajuste artigos / reduções para definir um status.";
       }
 
       statusSugeridoSpan.textContent = status;
@@ -653,44 +611,42 @@
       const cpf = inputCpf.value.trim() || "Não informado";
       const artigosLista = listaArtigos.map(a => a.codigo).join(", ") || "Nenhum";
       const pena = parseInt(penaFinalSpan.textContent, 10) || 0;
-      const totalMulta = listaArtigos.reduce((s,a) => s + a.multa, 0);
-      const totalFianca = listaArtigos.reduce((s,a) => s + a.fianca, 0);
+      const totalMul = listaArtigos.reduce((s,a) => s + a.multa, 0);
+      const totalFia = listaArtigos.reduce((s,a) => s + a.fianca, 0);
 
       let titulo = "";
-      let descricao = "";
+      let situacao = "";
 
       if (statusAtual === "prisao") {
         titulo = "PRISÃO";
-        descricao = "Indivíduo segue preso para cumprimento integral da pena.";
+        situacao = "Situação: Foi encaminhado para o Centro de Detenção.";
       } else if (statusAtual === "pena_parcial") {
         titulo = "PENA PARCIAL";
-        descricao = "Indivíduo será encaminhado ao Centro de Detenção com redução parcial da pena.";
+        situacao = "Situação: Cumprirá parte da pena em regime reduzido.";
       } else if (statusAtual === "liberdade") {
         titulo = "LIBERDADE";
-        descricao = "Indivíduo segue em liberdade mediante pagamento das penas afiançáveis.";
+        situacao = "Situação: Foi liberado após pagamento das penas afiançáveis.";
       } else if (statusAtual === "multar") {
         titulo = "MULTAR";
-        descricao = "Indivíduo será autuado de acordo com suas infrações, com foco em multa e fiança.";
+        situacao = "Situação: Foi apenas multado conforme o Código Penal.";
       }
 
       const texto =
         titulo + "\n" +
-        descricao + "\n" +
+        situacao + "\n" +
         "-----------------------------\n" +
         "Nome: " + nome + "\n" +
         "CPF: " + cpf + "\n" +
         "Artigos: " + artigosLista + "\n" +
         "Pena: " + pena + " meses\n" +
-        "Multa: " + formatarMoeda(totalMulta) + "\n" +
-        "Fiança: " + formatarMoeda(totalFianca) + "\n" +
+        "Multa: " + formatarMoeda(totalMul) + "\n" +
+        "Fiança: " + formatarMoeda(totalFia) + "\n" +
         "-----------------------------";
 
       textoDiscord.value = texto;
     }
 
-    // ==============
     // EVENTOS
-    // ==============
     btnAdicionar.addEventListener("click", () => {
       const codigo = inputCodigo.value || selectArtigo.value;
       if (!codigo) {
@@ -700,10 +656,8 @@
       adicionarArtigo(codigo);
     });
 
-    inputCodigo.addEventListener("keyup", (e) => {
-      if (e.key === "Enter") {
-        btnAdicionar.click();
-      }
+    inputCodigo.addEventListener("keyup", e => {
+      if (e.key === "Enter") btnAdicionar.click();
     });
 
     btnCalcular.addEventListener("click", calcularPenaFinal);
@@ -721,7 +675,7 @@
       try {
         await navigator.clipboard.writeText(textoDiscord.value);
         btnCopiar.textContent = "COPIADO!";
-        setTimeout(() => (btnCopiar.textContent = "COPIAR TEXTO"), 1200);
+        setTimeout(() => btnCopiar.textContent = "COPIAR TEXTO", 1200);
       } catch {
         alert("Não foi possível copiar. Copie manualmente o texto.");
       }
