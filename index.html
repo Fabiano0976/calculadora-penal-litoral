@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Calculadora Penal Litoral City</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <style>
     * {
       box-sizing: border-box;
@@ -17,178 +16,242 @@
       background: #020617;
       color: #e5e7eb;
       min-height: 100vh;
+      padding: 24px 12px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1280px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.08), transparent 55%) #020617;
+      border-radius: 18px;
+      border: 1px solid #1f2937;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.65);
       padding: 24px;
     }
 
-    .page {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: #020617;
-      border-radius: 16px;
-      border: 1px solid #111827;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-      padding: 24px 28px 20px;
-    }
-
-    header {
+    .app-header {
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
-    header h1 {
+    .app-title {
       font-size: 26px;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #facc15;
-      margin-bottom: 4px;
+      font-weight: 800;
     }
 
-    header p {
+    .app-subtitle {
+      margin-top: 6px;
       font-size: 12px;
       color: #9ca3af;
     }
 
-    .layout {
+    .grid-main {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-      gap: 18px;
+      grid-template-columns: 2.2fr 1.4fr;
+      gap: 16px;
     }
 
     .card {
-      background: #020617;
-      border-radius: 12px;
-      border: 1px solid #111827;
+      background: rgba(15,23,42,0.96);
+      border-radius: 14px;
       padding: 14px 16px;
+      border: 1px solid #1f2937;
     }
 
-    .card h2 {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 10px;
-      color: #e5e7eb;
+    .card-header {
       display: flex;
       align-items: center;
       gap: 6px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #e5e7eb;
     }
 
-    .card h2::before {
+    .card-header::before {
       content: "";
       width: 3px;
       height: 16px;
       border-radius: 999px;
-      background: linear-gradient(to bottom, #38bdf8, #3b82f6);
-      display: inline-block;
+      background: linear-gradient(to bottom, #22c1c3, #2563eb);
     }
 
     label {
       font-size: 12px;
       color: #9ca3af;
-      display: block;
-      margin-bottom: 4px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .field {
+      margin-bottom: 8px;
     }
 
     input[type="text"],
     input[type="number"],
-    select {
+    select,
+    textarea {
       width: 100%;
-      padding: 7px 10px;
-      font-size: 13px;
-      border-radius: 8px;
-      border: 1px solid #1f2937;
+      padding: 7px 9px;
+      margin-top: 3px;
+      border-radius: 9px;
+      border: 1px solid #273549;
       background: #020617;
       color: #e5e7eb;
+      font-size: 13px;
       outline: none;
-      margin-bottom: 8px;
     }
 
     input:focus,
-    select:focus {
+    select:focus,
+    textarea:focus {
       border-color: #38bdf8;
     }
 
-    .row {
-      display: grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      border-radius: 999px;
-      padding: 8px 16px;
-      font-size: 13px;
-      background: linear-gradient(to right, #38bdf8, #3b82f6);
-      color: #0b1120;
-      transition: transform 0.08s, box-shadow 0.1s, filter 0.1s;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.1);
-      box-shadow: 0 8px 20px rgba(56,189,248,0.35);
-    }
-
-    button:active {
-      transform: translateY(0);
-      box-shadow: none;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 6px;
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 12px;
     }
 
-    th, td {
-      padding: 5px 6px;
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: #f9fafb;
+      box-shadow: 0 10px 22px rgba(37,99,235,0.45);
+      transition: transform 0.08s, box-shadow 0.08s, filter 0.08s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 14px 26px rgba(37,99,235,0.55);
+    }
+
+    .btn-secondary {
+      background: #111827;
+      color: #e5e7eb;
+      box-shadow: none;
+      border: 1px solid #374151;
+    }
+
+    .btn-secondary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 8px 18px rgba(15,23,42,0.7);
+    }
+
+    .btn-wide {
+      width: 100%;
+      justify-content: center;
+      display: inline-flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .btn-pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: #020617;
+      border: 1px solid #374151;
+      color: #9ca3af;
+      box-shadow: none;
+    }
+
+    .btn-pill.active {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-color: transparent;
+      color: #ecfeff;
+      box-shadow: 0 10px 22px rgba(34,197,94,0.35);
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      box-shadow: 0 10px 20px rgba(248,113,113,0.4);
+    }
+
+    .btn-danger:hover {
+      filter: brightness(1.05);
+      box-shadow: 0 14px 26px rgba(248,113,113,0.55);
+    }
+
+    .articles-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .articles-table th,
+    .articles-table td {
+      padding: 6px 6px;
       border-bottom: 1px solid #111827;
       text-align: left;
     }
 
-    th {
+    .articles-table thead {
       background: #020617;
-      font-weight: 600;
-      color: #9ca3af;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
-    tbody tr:nth-child(even) {
-      background: rgba(15,23,42,0.6);
+    .articles-table tbody tr:nth-child(even) {
+      background: rgba(15,23,42,0.9);
     }
 
-    .badge-row {
+    .totals-row {
+      margin-top: 8px;
       display: flex;
       gap: 8px;
-      margin-top: 8px;
       flex-wrap: wrap;
     }
 
     .badge {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid #1f2937;
-      font-size: 12px;
       background: #020617;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 11px;
+      border: 1px solid #374151;
       display: inline-flex;
-      gap: 4px;
       align-items: center;
+      gap: 6px;
+      color: #9ca3af;
     }
 
     .badge span {
-      color: #facc15;
       font-weight: 600;
+      color: #facc15;
+      font-size: 12px;
     }
 
     .checks {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 4px;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
       font-size: 12px;
-      margin-bottom: 8px;
     }
 
     .checks label {
@@ -196,374 +259,465 @@
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      margin-bottom: 0;
+      color: #cbd5f5;
     }
 
     .checks input[type="checkbox"] {
-      width: 14px;
-      height: 14px;
+      width: 15px;
+      height: 15px;
       accent-color: #38bdf8;
     }
 
-    .result-box {
+    .result-block {
       background: #020617;
-      border-radius: 10px;
+      border-radius: 11px;
       border: 1px solid #111827;
-      padding: 10px 12px;
-      margin-top: 6px;
-      font-size: 12px;
+      padding: 10px 11px;
+      margin-bottom: 10px;
+    }
+
+    .result-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #9ca3af;
+      margin-bottom: 4px;
     }
 
     .result-main {
       font-size: 22px;
-      font-weight: 700;
+      font-weight: 800;
       color: #facc15;
       margin-bottom: 2px;
     }
 
-    .result-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #9ca3af;
+    .result-extra {
+      font-size: 12px;
+      color: #e5e7eb;
     }
 
-    .status-sugerido-main {
-      font-weight: 700;
-      color: #38bdf8;
-      margin-bottom: 2px;
-    }
-
-    .status-sugerido-extra {
+    .status-text {
       font-size: 12px;
       color: #d1d5db;
-    }
-
-    .status-buttons {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 6px;
-      margin-top: 8px;
-      margin-bottom: 6px;
-    }
-
-    .status-btn {
-      background: #020617;
-      color: #e5e7eb;
-      border-radius: 999px;
-      border: 1px solid #1f2937;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-
-    .status-btn.active {
-      background: linear-gradient(to right,#38bdf8,#3b82f6);
-      color: #020617;
-      border-color: transparent;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 150px;
-      resize: vertical;
-      border-radius: 10px;
-      border: 1px solid #111827;
-      background: #020617;
-      color: #e5e7eb;
-      padding: 10px;
-      font-size: 12px;
-      font-family: "JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
       margin-top: 4px;
     }
 
+    .status-label {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #22c55e;
+    }
+
+    .discord-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .discord-row .btn-pill {
+      flex: 1;
+      text-align: center;
+      justify-content: center;
+      display: inline-flex;
+      align-items: center;
+    }
+
     .footer {
-      margin-top: 10px;
+      margin-top: 14px;
       font-size: 10px;
       text-align: center;
       color: #6b7280;
     }
 
+    /* ==== CARDS DE ARTIGOS ==== */
+
+    .artigos-grid {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+    }
+
+    .artigo-card {
+      border-radius: 12px;
+      padding: 9px 10px;
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: #f9fafb;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(15,23,42,0.65);
+      transition: transform 0.08s, box-shadow 0.08s, filter 0.08s;
+      font-family: inherit;
+    }
+
+    .artigo-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px rgba(15,23,42,0.9);
+      filter: brightness(1.05);
+    }
+
+    .artigo-codigo {
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      text-shadow: 0 1px 4px rgba(15,23,42,0.7);
+    }
+
+    .artigo-desc {
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .artigo-extra {
+      margin-top: 6px;
+      font-size: 10px;
+      opacity: 0.94;
+    }
+
     @media (max-width: 900px) {
-      .layout {
+      .grid-main {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        padding: 16px 12px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <h1>CALCULADORA PENAL LITORAL CITY</h1>
-      <p>Calcule serviços, multa e fiança com base no Código Penal da Litoral City e gere texto pronto para o Discord.</p>
+  <div class="app">
+    <header class="app-header">
+      <div class="app-title">CALCULADORA PENAL LITORAL CITY</div>
+      <div class="app-subtitle">Calcule serviços, multa e fiança com base no Código Penal da Litoral City e gere texto pronto para o Discord.</div>
     </header>
 
-    <div class="layout">
-      <!-- ESQUERDA -->
+    <div class="grid-main">
+      <!-- COLUNA ESQUERDA -->
       <section class="card">
-        <h2>Dados do detento</h2>
-        <div class="row">
-          <div>
-            <label for="nomeDetento">Nome</label>
-            <input type="text" id="nomeDetento" placeholder="Ex: Wood" />
+        <div class="card-header">Dados do detento</div>
+        <div class="field-row">
+          <div class="field">
+            <label for="inputNome">Nome</label>
+            <input id="inputNome" type="text" placeholder="Ex: Wood" />
           </div>
-          <div>
-            <label for="cpfDetento">CPF</label>
-            <input type="text" id="cpfDetento" placeholder="Ex: 12345" />
+          <div class="field">
+            <label for="inputCPF">CPF</label>
+            <input id="inputCPF" type="text" placeholder="Ex: 12345" />
           </div>
         </div>
 
-        <h2 style="margin-top: 8px;">Artigos</h2>
-        <div class="row">
-          <div>
+        <div class="card-header" style="margin-top:6px;">Artigos</div>
+        <div class="field-row">
+          <div class="field">
             <label for="inputCodigo">Código do artigo</label>
-            <input type="text" id="inputCodigo" placeholder="Ex: 10, 10.1, 23..." />
+            <input id="inputCodigo" type="text" placeholder="Ex: 10, 10.1, 23..." />
           </div>
-          <div>
+          <div class="field">
             <label for="inputObs">Observação (opcional)</label>
-            <input type="text" id="inputObs" placeholder="Ex: local, situação..." />
+            <input id="inputObs" type="text" placeholder="Ex: local, situação..." />
           </div>
         </div>
 
-        <div style="margin-bottom:4px;">
-          <label for="selectArtigo">Ou selecionar</label>
-          <div style="display:flex; gap:8px;">
-            <select id="selectArtigo">
-              <option value="">Selecione um artigo...</option>
-            </select>
-            <button id="btnAdicionar" style="white-space:nowrap;">Adicionar artigo</button>
+        <div class="field" style="margin-bottom:4px;">
+          <label>Selecione um artigo</label>
+          <div id="artigosGrid" class="artigos-grid">
+            <!-- Cards criados via JS -->
           </div>
         </div>
 
-        <table>
+        <table class="articles-table">
           <thead>
             <tr>
-              <th style="width:60px;">Cód.</th>
+              <th style="width:50px;">Cód.</th>
               <th>Descrição</th>
-              <th style="width:70px;">Serv.</th>
+              <th style="width:60px;">Serv.</th>
               <th style="width:90px;">Multa</th>
               <th style="width:90px;">Fiança</th>
-              <th style="width:50px;"></th>
+              <th style="width:60px;"></th>
             </tr>
           </thead>
           <tbody id="tabelaArtigosBody"></tbody>
         </table>
 
-        <div class="badge-row">
+        <div class="totals-row">
           <div class="badge">Serviços: <span id="totalServicos">0</span></div>
           <div class="badge">Multa total: <span id="totalMulta">R$ 0</span></div>
           <div class="badge">Fiança total: <span id="totalFianca">R$ 0</span></div>
         </div>
       </section>
 
-      <!-- DIREITA -->
-      <aside class="card">
-        <h2>Reduções / Benefícios</h2>
-        <div class="checks">
-          <label><input type="checkbox" id="chkReuPrimario" /> Réu primário (-30%)</label>
-          <label><input type="checkbox" id="chkAdvogado" /> Detenção com advogado (-30%)</label>
-          <label><input type="checkbox" id="chkCooperacao" /> Cooperação / rendição (-10%)</label>
-          <label><input type="checkbox" id="chkDelacao" /> Delação premiada (-50%)</label>
+      <!-- COLUNA DIREITA -->
+      <section class="card">
+        <div class="card-header">Reduções / Benefícios</div>
+        <div class="checks" style="margin-bottom:8px;">
+          <label><input type="checkbox" id="chkReuPrimario" />Réu primário (-30%)</label>
+          <label><input type="checkbox" id="chkAdvogado" />Detenção com advogado (-30%)</label>
+          <label><input type="checkbox" id="chkCooperacao" />Cooperação / rendição (-10%)</label>
+          <label><input type="checkbox" id="chkDelacao" />Delação premiada (-50%)</label>
         </div>
-        <button id="btnCalcular">CALCULAR PENA FINAL</button>
+        <button class="btn btn-wide" id="btnCalcular">CALCULAR PENA FINAL</button>
 
-        <div class="result-box" style="margin-top:10px;">
-          <div class="result-label">Pena de serviços</div>
+        <div class="result-block" style="margin-top:12px;">
+          <div class="result-title">Pena de serviços</div>
           <div class="result-main"><span id="penaFinal">0</span> meses</div>
-          <div style="font-size:12px; color:#d1d5db;">
-            Multa total: <b id="resultadoMulta">R$ 0</b> • Fiança total: <b id="resultadoFianca">R$ 0</b>
+          <div class="result-extra">
+            Multa total: <span id="resultadoMulta">R$ 0</span><br />
+            Fiança total: <span id="resultadoFianca">R$ 0</span>
           </div>
         </div>
 
-        <div class="result-box" style="margin-top:8px;">
-          <div class="result-label">Status sugerido</div>
-          <div class="status-sugerido-main" id="statusSugerido">—</div>
-          <div class="status-sugerido-extra" id="statusDetalhe">
-            Adicione artigos e calcule para ver o status.
-          </div>
+        <div class="result-block">
+          <div class="result-title">Status sugerido</div>
+          <div class="status-label" id="statusRP">—</div>
+          <div class="status-text" id="statusRPDetalhe">Adicione artigos e calcule para ver o status.</div>
         </div>
 
-        <h2 style="margin-top:10px;">Situação para Discord</h2>
-        <p style="font-size:11px; color:#9ca3af; margin-bottom:4px;">
-          Escolha o tipo de resultado e copie o texto pronto.
+        <div class="card-header" style="margin-top:4px;">Situação para Discord</div>
+        <p style="font-size:11px;color:#9ca3af;margin-bottom:6px;">
+          Escolha o tipo de resultado que você vai aplicar ao detento.
         </p>
-        <div class="status-buttons">
-          <button type="button" class="status-btn active" data-status="prisao">PRISÃO</button>
-          <button type="button" class="status-btn" data-status="pena_parcial">PENA PARCIAL</button>
-          <button type="button" class="status-btn" data-status="liberdade">LIBERDADE</button>
-          <button type="button" class="status-btn" data-status="multar">MULTAR</button>
+
+        <div class="discord-row">
+          <button class="btn btn-pill active" data-tipo="prisao" id="btnTipoPrisao">Prisão</button>
+          <button class="btn btn-pill" data-tipo="parcial" id="btnTipoParcial">Pena parcial</button>
+          <button class="btn btn-pill" data-tipo="multar" id="btnTipoMultar">Multar</button>
         </div>
 
-        <label style="margin-top:4px; font-size:11px;">Resumo para Discord</label>
-        <textarea id="textoDiscord" placeholder="Calcule a pena para gerar o texto."></textarea>
-
-        <div style="display:flex; justify-content:flex-end; margin-top:6px;">
-          <button id="btnCopiar" style="padding-inline:18px;">COPIAR TEXTO</button>
+        <div class="field">
+          <label for="selectSituacao">Situação (para texto do Discord)</label>
+          <select id="selectSituacao">
+            <option value="">Selecione uma situação...</option>
+            <option value="Foi encaminhado para o Centro de Detenção.">Foi encaminhado para o Centro de Detenção.</option>
+            <option value="Pagou a fiança e foi liberado.">Pagou a fiança e foi liberado.</option>
+            <option value="Recebeu pena parcial conforme acordo.">Recebeu pena parcial conforme acordo.</option>
+            <option value="Foi apenas multado, sem cumprimento de serviços.">Foi apenas multado, sem cumprimento de serviços.</option>
+          </select>
         </div>
-      </aside>
+
+        <div class="field">
+          <label for="resumoDiscord">Resumo para Discord</label>
+          <textarea id="resumoDiscord" readonly>Calcule a pena para gerar o texto.</textarea>
+        </div>
+
+        <button class="btn btn-wide" id="btnCopiar">COPIAR TEXTO</button>
+      </section>
     </div>
 
     <div class="footer">
-      Baseado no Código Penal da Litoral City. Ajuste valores se houver atualização oficial.
+      Baseado no Código Penal da Litoral City. Ajuste valores se o governo alterar o código.
     </div>
   </div>
 
   <script>
-    // --- TABELA DE ARTIGOS (exemplo, baseado no seu código penal) ---
+    // =========================
+    //  TABELA DE ARTIGOS
+    // =========================
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    // AQUI É ONDE VOCÊ PODE COLAR O SEU OBJETO "artigos" ANTIGO.
+    // Deixei alguns exemplos; é só seguir o mesmo padrão.
+    // codigo: { descricao, servicos, multa, fianca }
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
     const artigos = {
-      "10":   { desc: "Homicídio doloso (matar alguém com intenção)", serv: 60, multa: 60000, fianca: 0 },
-      "10.1": { desc: "Homicídio culposo (sem intenção)", serv: 40, multa: 40000, fianca: 0 },
-      "10.2": { desc: "Homicídio a oficial", serv: 60, multa: 50000, fianca: 0 },
-      "10.3": { desc: "Latrocínio (roubo seguido de morte)", serv: 50, multa: 40000, fianca: 0 },
-      "11":   { desc: "Tentativa de homicídio", serv: 40, multa: 35000, fianca: 0 },
-      "11.1": { desc: "Tentativa a oficial", serv: 50, multa: 40000, fianca: 0 },
-      "11.2": { desc: "Múltiplos homicídios", serv: 60, multa: 60000, fianca: 0 },
-      "12":   { desc: "Sequestro e cárcere privado", serv: 40, multa: 30000, fianca: 0 },
-      "12.1": { desc: "Sequestro a oficial", serv: 60, multa: 35000, fianca: 0 },
-      "12.2": { desc: "Extorsão mediante sequestro", serv: 50, multa: 40000, fianca: 0 },
-
-      "14.1": { desc: "Difamação", serv: 15, multa: 6000, fianca: 14000 },
-      "14.2": { desc: "Calúnia", serv: 15, multa: 6000, fianca: 14000 },
-      "14.3": { desc: "Injúria", serv: 25, multa: 14000, fianca: 20000 },
-
-      "15":   { desc: "Ameaça", serv: 20, multa: 8000, fianca: 16000 },
-      "15.1": { desc: "Ameaça contra oficial", serv: 30, multa: 10000, fianca: 20000 },
-      "15.2": { desc: "Ameaça com violência", serv: 30, multa: 10000, fianca: 20000 },
-
-      "17":   { desc: "Crueldade animal", serv: 20, multa: 12000, fianca: 24000 },
-      "18":   { desc: "Lesão corporal", serv: 20, multa: 6000, fianca: 14000 },
-      "19":   { desc: "Omissão de socorro", serv: 15, multa: 7000, fianca: 18000 },
-      "20":   { desc: "Danos morais / imagem", serv: 15, multa: 5000, fianca: 10000 },
-      "20.1": { desc: "Assédio moral", serv: 60, multa: 50000, fianca: 100000 },
-      "21":   { desc: "Ato obsceno", serv: 20, multa: 6000, fianca: 14000 },
-      "21.1": { desc: "Atentado ao pudor", serv: 60, multa: 120000, fianca: 0 }
-      // continue daqui se quiser colocar TODO o código penal
+      "10":   { descricao: "Homicídio doloso", servicos: 60, multa: 60000, fianca: 0 },
+      "10.1": { descricao: "Homicídio culposo", servicos: 40, multa: 40000, fianca: 0 },
+      "10.2": { descricao: "Homicídio a oficial", servicos: 60, multa: 50000, fianca: 0 },
+      "10.3": { descricao: "Latrocínio (roubo seguido de morte)", servicos: 50, multa: 40000, fianca: 0 },
+      "11":   { descricao: "Tentativa de homicídio", servicos: 40, multa: 35000, fianca: 0 },
+      "11.1": { descricao: "Tentativa de homicídio a oficial", servicos: 50, multa: 40000, fianca: 0 },
+      "12":   { descricao: "Sequestro e cárcere privado", servicos: 40, multa: 30000, fianca: 0 },
+      "12.1": { descricao: "Sequestro a oficial", servicos: 60, multa: 35000, fianca: 0 },
+      "14.1": { descricao: "Difamação", servicos: 15, multa: 6000, fianca: 14000 },
+      "14.2": { descricao: "Calúnia", servicos: 15, multa: 6000, fianca: 14000 },
+      "14.3": { descricao: "Injúria", servicos: 25, multa: 14000, fianca: 20000 },
+      "15":   { descricao: "Ameaça", servicos: 20, multa: 8000, fianca: 16000 },
+      "15.1": { descricao: "Ameaça contra oficial", servicos: 30, multa: 10000, fianca: 20000 },
+      "17":   { descricao: "Crueldade animal", servicos: 20, multa: 12000, fianca: 24000 },
+      "18":   { descricao: "Lesão corporal", servicos: 20, multa: 6000, fianca: 14000 },
+      "19":   { descricao: "Omissão de socorro", servicos: 15, multa: 7000, fianca: 18000 },
+      "20":   { descricao: "Danos morais / imagem", servicos: 15, multa: 5000, fianca: 10000 },
+      // (...) adicione os demais artigos aqui
     };
 
-    const inputNome = document.getElementById("nomeDetento");
-    const inputCpf = document.getElementById("cpfDetento");
-    const inputCodigo = document.getElementById("inputCodigo");
-    const inputObs = document.getElementById("inputObs");
-    const selectArtigo = document.getElementById("selectArtigo");
+    // =========================
+    //  VARIÁVEIS GERAIS
+    // =========================
     const tabelaBody = document.getElementById("tabelaArtigosBody");
-
     const totalServicosSpan = document.getElementById("totalServicos");
     const totalMultaSpan = document.getElementById("totalMulta");
     const totalFiancaSpan = document.getElementById("totalFianca");
+
+    const penaFinalSpan = document.getElementById("penaFinal");
+    const resultadoMultaSpan = document.getElementById("resultadoMulta");
+    const resultadoFiancaSpan = document.getElementById("resultadoFianca");
+    const statusRPSpan = document.getElementById("statusRP");
+    const statusRPDetalhe = document.getElementById("statusRPDetalhe");
 
     const chkReuPrimario = document.getElementById("chkReuPrimario");
     const chkAdvogado = document.getElementById("chkAdvogado");
     const chkCooperacao = document.getElementById("chkCooperacao");
     const chkDelacao = document.getElementById("chkDelacao");
 
-    const penaFinalSpan = document.getElementById("penaFinal");
-    const resultadoMultaSpan = document.getElementById("resultadoMulta");
-    const resultadoFiancaSpan = document.getElementById("resultadoFianca");
+    const inputCodigo = document.getElementById("inputCodigo");
+    const inputObs = document.getElementById("inputObs");
+    const inputNome = document.getElementById("inputNome");
+    const inputCPF = document.getElementById("inputCPF");
 
-    const statusSugeridoSpan = document.getElementById("statusSugerido");
-    const statusDetalheSpan = document.getElementById("statusDetalhe");
-
-    const textoDiscord = document.getElementById("textoDiscord");
-    const btnAdicionar = document.getElementById("btnAdicionar");
+    const selectSituacao = document.getElementById("selectSituacao");
+    const resumoDiscord = document.getElementById("resumoDiscord");
     const btnCalcular = document.getElementById("btnCalcular");
     const btnCopiar = document.getElementById("btnCopiar");
-    const statusButtons = document.querySelectorAll(".status-btn");
+
+    const btnTipoPrisao = document.getElementById("btnTipoPrisao");
+    const btnTipoParcial = document.getElementById("btnTipoParcial");
+    const btnTipoMultar = document.getElementById("btnTipoMultar");
 
     let listaArtigos = [];
-    let statusAtual = "prisao";
+    let ultimaPenaFinal = 0;
+    let tipoResultadoAtual = "prisao";
 
+    // =========================
+    //  FUNÇÕES UTILITÁRIAS
+    // =========================
     function formatarMoeda(valor) {
       return valor.toLocaleString("pt-BR", {
         style: "currency",
-        currency: "BRL"
-      });
-    }
-
-    function popularSelect() {
-      Object.keys(artigos).sort((a,b) => parseFloat(a) - parseFloat(b))
-        .forEach(cod => {
-          const opt = document.createElement("option");
-          opt.value = cod;
-          opt.textContent = "Art. " + cod + " - " + artigos[cod].desc;
-          selectArtigo.appendChild(opt);
-        });
-    }
-
-    function atualizarTabela() {
-      tabelaBody.innerHTML = "";
-      listaArtigos.forEach((item, index) => {
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-          <td>${item.codigo}</td>
-          <td>${item.descricao}</td>
-          <td>${item.servicos}</td>
-          <td>${formatarMoeda(item.multa)}</td>
-          <td>${formatarMoeda(item.fianca)}</td>
-          <td><button data-index="${index}" style="padding:3px 8px;font-size:11px;">X</button></td>
-        `;
-        tabelaBody.appendChild(tr);
-      });
-
-      tabelaBody.querySelectorAll("button[data-index]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const i = Number(btn.dataset.index);
-          listaArtigos.splice(i,1);
-          atualizarTotais();
-          atualizarTabela();
-          atualizarResumo();
-        });
+        currency: "BRL",
+        minimumFractionDigits: 0
       });
     }
 
     function atualizarTotais() {
-      const totalServ = listaArtigos.reduce((s,a) => s + a.servicos, 0);
-      const totalMul = listaArtigos.reduce((s,a) => s + a.multa, 0);
-      const totalFia = listaArtigos.reduce((s,a) => s + a.fianca, 0);
+      const totalServ = listaArtigos.reduce((s, a) => s + a.servicos, 0);
+      const totalMulta = listaArtigos.reduce((s, a) => s + a.multa, 0);
+      const totalFianca = listaArtigos.reduce((s, a) => s + a.fianca, 0);
 
       totalServicosSpan.textContent = totalServ;
-      totalMultaSpan.textContent = formatarMoeda(totalMul);
-      totalFiancaSpan.textContent = formatarMoeda(totalFia);
+      totalMultaSpan.textContent = formatarMoeda(totalMulta);
+      totalFiancaSpan.textContent = formatarMoeda(totalFianca);
+
+      return { totalServ, totalMulta, totalFianca };
+    }
+
+    function renderTabela() {
+      tabelaBody.innerHTML = "";
+      listaArtigos.forEach((item, index) => {
+        const tr = document.createElement("tr");
+
+        const tdCod = document.createElement("td");
+        tdCod.textContent = item.codigo;
+        tr.appendChild(tdCod);
+
+        const tdDesc = document.createElement("td");
+        tdDesc.textContent = item.descricao;
+        tr.appendChild(tdDesc);
+
+        const tdServ = document.createElement("td");
+        tdServ.textContent = item.servicos;
+        tr.appendChild(tdServ);
+
+        const tdMulta = document.createElement("td");
+        tdMulta.textContent = formatarMoeda(item.multa);
+        tr.appendChild(tdMulta);
+
+        const tdFianca = document.createElement("td");
+        tdFianca.textContent = formatarMoeda(item.fianca);
+        tr.appendChild(tdFianca);
+
+        const tdAcoes = document.createElement("td");
+        const btnRemover = document.createElement("button");
+        btnRemover.textContent = "Remover";
+        btnRemover.className = "btn btn-danger";
+        btnRemover.style.padding = "3px 9px";
+        btnRemover.style.fontSize = "10px";
+        btnRemover.onclick = () => {
+          listaArtigos.splice(index, 1);
+          renderTabela();
+          atualizarTotais();
+          gerarResumoDiscord();
+        };
+        tdAcoes.appendChild(btnRemover);
+        tr.appendChild(tdAcoes);
+
+        tabelaBody.appendChild(tr);
+      });
     }
 
     function adicionarArtigo(codigo) {
-      const cod = codigo.trim();
-      if (!cod) return;
-
+      const cod = String(codigo).trim();
       if (!artigos[cod]) {
-        alert("Artigo não encontrado na tabela. Adicione no script se precisar.");
+        alert("Artigo não encontrado na tabela. Adicione no objeto 'artigos' no script.");
         return;
       }
 
-      const base = artigos[cod];
-      let desc = base.desc;
+      const dados = artigos[cod];
+      let descFinal = dados.descricao;
       const extra = inputObs.value.trim();
-      if (extra) desc += " (" + extra + ")";
+      if (extra) descFinal += " (" + extra + ")";
 
       listaArtigos.push({
         codigo: cod,
-        descricao: desc,
-        servicos: base.serv,
-        multa: base.multa,
-        fianca: base.fianca
+        descricao: descFinal,
+        servicos: dados.servicos || 0,
+        multa: dados.multa || 0,
+        fianca: dados.fianca || 0
       });
 
       inputCodigo.value = "";
       inputObs.value = "";
-      selectArtigo.value = "";
+
+      renderTabela();
       atualizarTotais();
-      atualizarTabela();
-      atualizarResumo();
+      gerarResumoDiscord();
     }
 
+    // =========================
+    //  CARDS DE ARTIGOS
+    // =========================
+    function renderArtigosGrid() {
+      const grid = document.getElementById("artigosGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      Object.entries(artigos).forEach(([codigo, dados]) => {
+        const card = document.createElement("button");
+        card.className = "artigo-card";
+        card.innerHTML = `
+          <div class="artigo-codigo">Art. ${codigo}</div>
+          <div class="artigo-desc">${dados.descricao}</div>
+          <div class="artigo-extra">
+            ${dados.servicos ? `Serviços: ${dados.servicos}<br>` : ""}
+            Multa: ${formatarMoeda(dados.multa)}
+            ${dados.fianca ? `<br>Fiança: ${formatarMoeda(dados.fianca)}` : ""}
+          </div>
+        `;
+        card.addEventListener("click", () => adicionarArtigo(codigo));
+        grid.appendChild(card);
+      });
+    }
+
+    // =========================
+    //  CÁLCULO DA PENA FINAL
+    // =========================
     function calcularPenaFinal() {
-      let pena = listaArtigos.reduce((s,a) => s + a.servicos, 0);
+      const { totalServ, totalMulta, totalFianca } = atualizarTotais();
 
       if (listaArtigos.length === 0) {
-        alert("Adicione pelo menos um artigo.");
+        alert("Adicione pelo menos um artigo antes de calcular.");
         return;
       }
+
+      let pena = totalServ;
 
       if (chkReuPrimario.checked) pena *= 0.7;   // -30%
       if (chkAdvogado.checked)    pena *= 0.7;   // -30%
@@ -573,117 +727,128 @@
       pena = Math.round(pena);
       if (pena < 0) pena = 0;
 
-      const totalMul = listaArtigos.reduce((s,a) => s + a.multa, 0);
-      const totalFia = listaArtigos.reduce((s,a) => s + a.fianca, 0);
+      ultimaPenaFinal = pena;
 
       penaFinalSpan.textContent = pena;
-      resultadoMultaSpan.textContent = formatarMoeda(totalMul);
-      resultadoFiancaSpan.textContent = formatarMoeda(totalFia);
+      resultadoMultaSpan.textContent = formatarMoeda(totalMulta);
+      resultadoFiancaSpan.textContent = formatarMoeda(totalFianca);
 
+      // Status simples
       let status = "";
       let detalhe = "";
 
-      if (pena === 0 && totalMul > 0 && totalFia === 0) {
-        status = "MULTA";
-        detalhe = "Apenas multa aplicável. Considere liberação após pagamento.";
-      } else if (pena === 0 && totalFia > 0) {
+      if (pena === 0 && totalFianca > 0) {
         status = "LIBERDADE MEDIANTE FIANÇA";
-        detalhe = "Sem serviços, apenas multa e/ou fiança.";
-      } else if (pena > 0 && totalFia > 0 && pena <= 25) {
-        status = "PENA PARCIAL";
-        detalhe = "Possível acordo com pagamento e parte da pena.";
-      } else if (pena > 0) {
-        status = "PRISÃO";
-        detalhe = "Cumprimento da pena de serviços conforme código penal.";
+        detalhe = "Réu liberado após pagamento de fiança e multa.";
+      } else if (pena <= 25) {
+        status = "PENA MODERADA / POSSÍVEL ACORDO";
+        detalhe = "Avaliar possibilidade de pena parcial ou acordo judicial.";
       } else {
-        status = "—";
-        detalhe = "Ajuste artigos / reduções para definir um status.";
+        status = "PRISÃO";
+        detalhe = "Pena alta. Cumprimento integral conforme código penal.";
       }
 
-      statusSugeridoSpan.textContent = status;
-      statusDetalheSpan.textContent = detalhe;
+      statusRPSpan.textContent = status;
+      statusRPDetalhe.textContent = detalhe;
 
-      atualizarResumo();
+      gerarResumoDiscord();
     }
 
-    function atualizarResumo() {
+    // =========================
+    //  RESUMO PARA DISCORD
+    // =========================
+    function marcarTipoResultado(tipo) {
+      tipoResultadoAtual = tipo;
+
+      [btnTipoPrisao, btnTipoParcial, btnTipoMultar].forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      if (tipo === "prisao") btnTipoPrisao.classList.add("active");
+      else if (tipo === "parcial") btnTipoParcial.classList.add("active");
+      else if (tipo === "multar") btnTipoMultar.classList.add("active");
+    }
+
+    function gerarResumoDiscord() {
+      const { totalServ, totalMulta, totalFianca } = atualizarTotais();
+
       const nome = inputNome.value.trim() || "Não informado";
-      const cpf = inputCpf.value.trim() || "Não informado";
-      const artigosLista = listaArtigos.map(a => a.codigo).join(", ") || "Nenhum";
-      const pena = parseInt(penaFinalSpan.textContent, 10) || 0;
-      const totalMul = listaArtigos.reduce((s,a) => s + a.multa, 0);
-      const totalFia = listaArtigos.reduce((s,a) => s + a.fianca, 0);
+      const cpf = inputCPF.value.trim() || "Não informado";
+      const artigosStr = listaArtigos.length
+        ? listaArtigos.map(a => a.codigo).join(", ")
+        : "Nenhum";
+
+      const situacao = selectSituacao.value.trim();
 
       let titulo = "";
-      let situacao = "";
+      if (tipoResultadoAtual === "prisao") titulo = "PRISÃO";
+      else if (tipoResultadoAtual === "parcial") titulo = "PENA PARCIAL";
+      else if (tipoResultadoAtual === "multar") titulo = "MULTA";
 
-      if (statusAtual === "prisao") {
-        titulo = "PRISÃO";
-        situacao = "Situação: Foi encaminhado para o Centro de Detenção.";
-      } else if (statusAtual === "pena_parcial") {
-        titulo = "PENA PARCIAL";
-        situacao = "Situação: Cumprirá parte da pena em regime reduzido.";
-      } else if (statusAtual === "liberdade") {
-        titulo = "LIBERDADE";
-        situacao = "Situação: Foi liberado após pagamento das penas afiançáveis.";
-      } else if (statusAtual === "multar") {
-        titulo = "MULTAR";
-        situacao = "Situação: Foi apenas multado conforme o Código Penal.";
+      const linhas = [];
+      linhas.push(titulo);
+      linhas.push("");
+
+      if (situacao) {
+        linhas.push(`> Situação: ${situacao}`);
+        linhas.push("-----------------------");
       }
 
-      const texto =
-        titulo + "\n" +
-        situacao + "\n" +
-        "-----------------------------\n" +
-        "Nome: " + nome + "\n" +
-        "CPF: " + cpf + "\n" +
-        "Artigos: " + artigosLista + "\n" +
-        "Pena: " + pena + " meses\n" +
-        "Multa: " + formatarMoeda(totalMul) + "\n" +
-        "Fiança: " + formatarMoeda(totalFia) + "\n" +
-        "-----------------------------";
+      linhas.push(`Nome: ${nome}`);
+      linhas.push(`CPF: ${cpf}`);
+      linhas.push(`Artigos: ${artigosStr}`);
 
-      textoDiscord.value = texto;
+      if (tipoResultadoAtual !== "multar") {
+        linhas.push(`Pena: ${ultimaPenaFinal || totalServ} meses`);
+      }
+
+      linhas.push(`Multa: ${formatarMoeda(totalMulta)}`);
+      linhas.push(`Fiança: ${formatarMoeda(totalFianca)}`);
+      linhas.push("-----------------------");
+
+      resumoDiscord.value = linhas.join("\n");
     }
 
-    // EVENTOS
-    btnAdicionar.addEventListener("click", () => {
-      const codigo = inputCodigo.value || selectArtigo.value;
-      if (!codigo) {
-        alert("Digite um código ou selecione um artigo.");
-        return;
-      }
-      adicionarArtigo(codigo);
-    });
-
-    inputCodigo.addEventListener("keyup", e => {
-      if (e.key === "Enter") btnAdicionar.click();
-    });
-
+    // =========================
+    //  EVENTOS
+    // =========================
     btnCalcular.addEventListener("click", calcularPenaFinal);
 
-    statusButtons.forEach(btn => {
+    inputCodigo.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        if (inputCodigo.value.trim() !== "") {
+          adicionarArtigo(inputCodigo.value.trim());
+        }
+      }
+    });
+
+    [btnTipoPrisao, btnTipoParcial, btnTipoMultar].forEach(btn => {
       btn.addEventListener("click", () => {
-        statusButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        statusAtual = btn.dataset.status;
-        atualizarResumo();
+        marcarTipoResultado(btn.dataset.tipo);
+        gerarResumoDiscord();
       });
     });
 
-    btnCopiar.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(textoDiscord.value);
-        btnCopiar.textContent = "COPIADO!";
-        setTimeout(() => btnCopiar.textContent = "COPIAR TEXTO", 1200);
-      } catch {
-        alert("Não foi possível copiar. Copie manualmente o texto.");
-      }
+    selectSituacao.addEventListener("change", gerarResumoDiscord);
+    inputNome.addEventListener("input", gerarResumoDiscord);
+    inputCPF.addEventListener("input", gerarResumoDiscord);
+
+    btnCopiar.addEventListener("click", () => {
+      resumoDiscord.select();
+      document.execCommand("copy");
+      btnCopiar.textContent = "COPIADO ✔";
+      setTimeout(() => (btnCopiar.textContent = "COPIAR TEXTO"), 1500);
     });
 
-    // inicial
-    popularSelect();
-    atualizarResumo();
+    // =========================
+    //  INICIALIZAÇÃO
+    // =========================
+    document.addEventListener("DOMContentLoaded", () => {
+      renderArtigosGrid();
+      atualizarTotais();
+      marcarTipoResultado("prisao");
+      gerarResumoDiscord();
+    });
   </script>
 </body>
 </html>
