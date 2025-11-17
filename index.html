@@ -462,26 +462,118 @@
   </div>
 
   <script>
-    // =============================
-    // TABELA DE ARTIGOS
-    // =============================
-    // Exemplo: coloque aqui todos os artigos da Litoral City.
-    // Formato:
-    // "10":   { descricao: "...", servicos: 60, multa: 60000, fianca: 0 },
-    // "10.1": { descricao: "...", servicos: 40, multa: 40000, fianca: 0 },
-    // etc.
+    // ============================
+    // TABELA DE ARTIGOS – COMPLETA
+    // ============================
     const artigos = {
-      "10":   { descricao: "Homicídio doloso", servicos: 60, multa: 60000, fianca: 0 },
-      "10.1": { descricao: "Homicídio culposo", servicos: 40, multa: 40000, fianca: 0 },
-      "10.2": { descricao: "Homicídio a oficial", servicos: 60, multa: 50000, fianca: 0 },
-      "11":   { descricao: "Tentativa de homicídio", servicos: 40, multa: 35000, fianca: 0 },
-      "23":   { descricao: "Roubo", servicos: 30, multa: 8000,  fianca: 20000 },
-      "36":   { descricao: "Posse de substâncias ilícitas", servicos: 30, multa: 18000, fianca: 40000 },
-      "36.1": { descricao: "Posse ilegal de armas (baixo calibre)", servicos: 40, multa: 20000, fianca: 48000 },
-      "41":   { descricao: "Corrupção passiva", servicos: 40, multa: 30000, fianca: 80000 },
-      "54":   { descricao: "Desordem social", servicos: 15, multa: 5000,  fianca: 12000 },
-      "61":   { descricao: "Poluição sonora", servicos: 10, multa: 6000,  fianca: 12000 },
-      // 👉 ADICIONE AQUI o resto dos artigos do seu código penal
+      // CRIMES CONTRA A VIDA
+      "10":  { descricao: "Homicídio doloso (matar alguém com intenção)",              servicos: 60, multa: 60000, fianca: 0 },
+      "10.1":{ descricao: "Homicídio culposo (matar alguém sem intenção)",            servicos: 40, multa: 40000, fianca: 0 },
+      "10.2":{ descricao: "Homicídio a oficial (matar um oficial)",                   servicos: 60, multa: 50000, fianca: 0 },
+      "10.3":{ descricao: "Latrocínio (roubo seguido de morte)",                      servicos: 50, multa: 40000, fianca: 0 },
+      "11":  { descricao: "Tentativa de homicídio",                                   servicos: 40, multa: 35000, fianca: 0 },
+      "11.1":{ descricao: "Tentativa de homicídio a oficial",                         servicos: 50, multa: 40000, fianca: 0 },
+      "11.2":{ descricao: "Múltiplos homicídios",                                     servicos: 60, multa: 60000, fianca: 0 },
+      "12":  { descricao: "Sequestro e cárcere privado",                              servicos: 40, multa: 30000, fianca: 0 },
+      "12.1":{ descricao: "Sequestro a oficial",                                      servicos: 60, multa: 35000, fianca: 0 },
+      "12.2":{ descricao: "Extorsão mediante sequestro",                              servicos: 50, multa: 40000, fianca: 0 },
+
+      // CRIMES CONTRA A HONRA
+      "14":  { descricao: "Lei de igualdade (direitos fundamentais)",                 servicos: 0,  multa: 0,     fianca: 0 },
+      "14.1":{ descricao: "Difamação",                                                servicos: 15, multa: 6000,  fianca: 14000 },
+      "14.2":{ descricao: "Calúnia",                                                  servicos: 15, multa: 6000,  fianca: 14000 },
+      "14.3":{ descricao: "Injúria",                                                  servicos: 25, multa: 14000, fianca: 20000 },
+      "15":  { descricao: "Ameaça",                                                   servicos: 20, multa: 8000,  fianca: 16000 },
+      "15.1":{ descricao: "Ameaça contra oficial",                                    servicos: 30, multa: 10000, fianca: 20000 },
+      "15.2":{ descricao: "Ameaça com violência",                                     servicos: 30, multa: 10000, fianca: 20000 },
+
+      // INTEGRIDADE FÍSICA E BEM-ESTAR
+      "17":  { descricao: "Crueldade animal",                                         servicos: 20, multa: 12000, fianca: 24000 },
+      "18":  { descricao: "Lesão corporal",                                           servicos: 20, multa: 6000,  fianca: 14000 },
+      "19":  { descricao: "Omissão de socorro",                                       servicos: 15, multa: 7000,  fianca: 18000 },
+      "20":  { descricao: "Danos morais (imagem alheia)",                             servicos: 15, multa: 5000,  fianca: 10000 },
+      "20.1":{ descricao: "Assédio moral",                                            servicos: 60, multa: 50000, fianca: 100000 },
+      "21":  { descricao: "Ato obsceno",                                              servicos: 20, multa: 6000,  fianca: 14000 },
+      "21.1":{ descricao: "Atentado ao pudor",                                        servicos: 60, multa: 120000,fianca: 0 },
+
+      // CRIMES CONTRA O PATRIMÔNIO
+      "23":  { descricao: "Roubo",                                                    servicos: 30, multa: 8000,  fianca: 20000 },
+      "23.1":{ descricao: "Tentativa de roubo",                                       servicos: 20, multa: 6000,  fianca: 14000 },
+      "23.2":{ descricao: "Furto",                                                    servicos: 10, multa: 5000,  fianca: 12000 },
+      "24":  { descricao: "Assalto à loja",                                           servicos: 40, multa: 15000, fianca: 32000 },
+      "25":  { descricao: "Assalto a banco (pequeno porte)",                          servicos: 45, multa: 20000, fianca: 44000 },
+      "26":  { descricao: "Assalto à joalheria",                                      servicos: 50, multa: 25000, fianca: 48000 },
+      "27":  { descricao: "Assalto ao Banco Central",                                 servicos: 100,multa: 50000, fianca: 120000 },
+      "28":  { descricao: "Roubo a registradora",                                     servicos: 25, multa: 12000, fianca: 28000 },
+      "29":  { descricao: "Roubo a caixa eletrônico",                                 servicos: 30, multa: 16000, fianca: 32000 },
+      "30":  { descricao: "Assalto a loja de armas",                                  servicos: 40, multa: 18000, fianca: 38000 },
+      "31":  { descricao: "Lavagem / ocultação de bens, direitos e valores",          servicos: 60, multa: 34000, fianca: 76000 },
+      "32":  { descricao: "Dano ao patrimônio",                                       servicos: 40, multa: 15000, fianca: 32000 },
+      "32.1":{ descricao: "Invasão à propriedade",                                    servicos: 20, multa: 8000,  fianca: 18000 },
+      "33":  { descricao: "Receptação",                                               servicos: 30, multa: 16000, fianca: 32000 },
+      "34":  { descricao: "Estelionato",                                              servicos: 40, multa: 12000, fianca: 38000 },
+      "34.1":{ descricao: "Extorsão",                                                 servicos: 30, multa: 16000, fianca: 36000 },
+      "34.2":{ descricao: "Evasão financeira (não pagar por bens/serviços)",          servicos: 30, multa: 15000, fianca: 34000 },
+
+      // TRÁFICO E POSSE ILEGAL
+      "36":  { descricao: "Posse de substâncias ilícitas",                            servicos: 30, multa: 18000, fianca: 40000 },
+      "36.1":{ descricao: "Posse ilegal de armas (baixo calibre)",                    servicos: 40, multa: 20000, fianca: 48000 },
+      "36.2":{ descricao: "Posse de itens de uso de servidores públicos/governamentais", servicos: 40, multa: 24000, fianca: 52000 },
+      "36.3":{ descricao: "Posse de dinheiro sujo abaixo de 100.000",                 servicos: 20, multa: 40000, fianca: 82000 },
+      "36.4":{ descricao: "Posse de dinheiro sujo acima de 100.000",                  servicos: 40, multa: 80000, fianca: 180000 },
+      "37":  { descricao: "Tráfico de órgãos",                                        servicos: 40, multa: 70000, fianca: 140000 },
+      "38":  { descricao: "Tráfico de armas e munições",                              servicos: 50, multa: 70000, fianca: 160000 },
+      "38.1":{ descricao: "Posse de equipamento balístico",                           servicos: 40, multa: 26000, fianca: 56000 },
+      "39":  { descricao: "Tráfico de armas calibre médio/alto",                      servicos: 60, multa: 90000, fianca: 180000 },
+      "40":  { descricao: "Dinheiro sujo abaixo de 40.000",                           servicos: 30, multa: 20000, fianca: 62000 },
+
+      // CRIMES CONTRA A ADMINISTRAÇÃO PÚBLICA
+      "41":  { descricao: "Corrupção passiva",                                        servicos: 40, multa: 30000, fianca: 80000 },
+      "41.1":{ descricao: "Corrupção de autoridade (pós-desligamento)",               servicos: 50, multa: 100000,fianca: 220000 },
+      "42":  { descricao: "Corrupção ativa",                                          servicos: 60, multa: 60000, fianca: 140000 },
+      "42.1":{ descricao: "Tentativa de suborno",                                     servicos: 30, multa: 30000, fianca: 84000 },
+      "43":  { descricao: "Obstrução de justiça",                                     servicos: 40, multa: 60000, fianca: 128000 },
+      "43.1":{ descricao: "Omissão ou obstrução de provas",                           servicos: 30, multa: 30000, fianca: 64000 },
+      "44":  { descricao: "Prevaricação",                                             servicos: 60, multa: 80000, fianca: 160000 },
+      "44.1":{ descricao: "Abuso de autoridade",                                      servicos: 20, multa: 24000, fianca: 56000 },
+      "45":  { descricao: "Usurpação de função pública",                              servicos: 60, multa: 60000, fianca: 120000 },
+      "46":  { descricao: "Abolição violenta do Estado Democrático de Direito",       servicos: 60, multa: 50000, fianca: 120000 },
+      "47":  { descricao: "Associação criminosa",                                     servicos: 40, multa: 18000, fianca: 40000 },
+      "48":  { descricao: "Falsidade ideológica",                                     servicos: 20, multa: 6000,  fianca: 18000 },
+      "49":  { descricao: "Impossibilidade de identificação (não apresentar documento)", servicos: 10, multa: 6000, fianca: 12000 },
+      "50":  { descricao: "Falso testemunho (perjúrio)",                              servicos: 40, multa: 40000, fianca: 86000 },
+      "51":  { descricao: "Lei de propriedade industrial (prática abusiva de preços/abandono)", servicos: 60, multa: 80000, fianca: 150000 },
+      "51.1":{ descricao: "Empresa irregular (sem alvará ou vencido)",                servicos: 70, multa: 50000, fianca: 100000 },
+      "51.2":{ descricao: "Crime contra relações de consumo",                         servicos: 30, multa: 54000, fianca: 120000 },
+      "52":  { descricao: "Venda ilegal de produtos restritos sem licença",           servicos: 25, multa: 40000, fianca: 90000 },
+      "53":  { descricao: "Favorecimento pessoal",                                    servicos: 40, multa: 30000, fianca: 90000 },
+
+      // CRIMES CONTRA A ORDEM PÚBLICA
+      "54":  { descricao: "Desordem social",                                          servicos: 15, multa: 5000,  fianca: 12000 },
+      "54.1":{ descricao: "Apologia ao crime",                                        servicos: 30, multa: 50000, fianca: 110000 },
+      "55":  { descricao: "Desacato",                                                 servicos: 20, multa: 12000, fianca: 26000 },
+      "56":  { descricao: "Desobediência",                                            servicos: 15, multa: 10000, fianca: 22000 },
+      "57":  { descricao: "Resistência à prisão",                                     servicos: 20, multa: 5000,  fianca: 15000 },
+      "58":  { descricao: "Fuga de pessoa presa ou medida de segurança",              servicos: 20, multa: 16000, fianca: 38000 },
+      "58.1":{ descricao: "Fuga de abordagem policial",                               servicos: 20, multa: 8000,  fianca: 20000 },
+      "59":  { descricao: "Ocultação facial",                                         servicos: 10, multa: 8000,  fianca: 18000 },
+      "60":  { descricao: "Multas pendentes acima de 50.000",                         servicos: 30, multa: 8000,  fianca: 100000 },
+      "61":  { descricao: "Poluição sonora",                                          servicos: 10, multa: 6000,  fianca: 12000 },
+      "62":  { descricao: "Não respeitar perímetro da ação",                          servicos: 10, multa: 20000, fianca: 12000 },
+      "63":  { descricao: "Excesso de ficha criminal (mais de 10 ocorrências)",       servicos: 60, multa: 10000, fianca: 15000 },
+
+      // LEIS DE TRÂNSITO
+      "66":  { descricao: "Excesso de velocidade em área urbana",                     servicos: 0,  multa: 8000,  fianca: 0 },
+      "67":  { descricao: "Atropelamento por imprudência no trânsito",                servicos: 10, multa: 5000,  fianca: 15000 },
+      "68":  { descricao: "Direção perigosa",                                         servicos: 10, multa: 5000,  fianca: 15000 },
+      "68.1":{ descricao: "Corrida ilegal",                                           servicos: 20, multa: 14000, fianca: 34000 },
+      "69":  { descricao: "Veículo em local proibido (estacionado)",                  servicos: 0,  multa: 4000,  fianca: 0 },
+      "70":  { descricao: "Veículo abandonado em via pública",                        servicos: 0,  multa: 5000,  fianca: 0 },
+      "71":  { descricao: "Veículo danificado sem condições de segurança",            servicos: 0,  multa: 3000,  fianca: 0 },
+      "72":  { descricao: "Uso de veículo de terceiros/emprego para crimes",          servicos: 30, multa: 30000, fianca: 68000 },
+      "73":  { descricao: "Tráfego aéreo sem habilitação/autorização",                servicos: 50, multa: 30000, fianca: 80000 },
+      "73.1":{ descricao: "Pouso em local indevido",                                  servicos: 10, multa: 40000, fianca: 0 },
+      "73.2":{ descricao: "Pilotagem perigosa",                                       servicos: 10, multa: 50000, fianca: 0 }
     };
 
     const listaArtigos = [];
